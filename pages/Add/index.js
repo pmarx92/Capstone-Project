@@ -16,7 +16,7 @@ export default function Add() {
 
   useEffect(() => {
     setLocalStorage("localfFishList", fishList);
-  }, [fishList]);
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,13 +29,14 @@ export default function Add() {
       location: e.target.location.value,
       date: startDate,
     };
-    setFishList(newFish);
-    console.log(fishList);
+    setFishList([...fishList].concat(newFish));
   };
 
+  // Test Function so you can test the LocalStorage easy
   const localStorageTestFunction = () => {
     console.log(fishList);
   };
+
   return (
     <div>
       <h1>This is the Add Page - Under Construction</h1>
@@ -99,6 +100,7 @@ export default function Add() {
 
         <StyledButton type="submit">Submit</StyledButton>
       </StyledForm>
+
       <button onClick={localStorageTestFunction}>
         Click me to test the LocalStorage
       </button>
