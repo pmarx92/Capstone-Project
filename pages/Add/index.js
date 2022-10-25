@@ -2,20 +2,40 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {
+  setLocalStorage,
+  loadLocalStorage,
+} from "../../components/LocalStorage";
+import { nanoid } from "nanoid";
 
 export default function Add() {
   const [startDate, setStartDate] = useState(new Date());
+  const [fishList, setFishList] = useState(
+    loadLocalStorage("localfFishList") ?? []
+  );
+
+  useEffect(() => {
+    setLocalStorage("localfFishList", fishList);
+  }, [fishList]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.name.value);
-    console.log(e.target.weight.value);
-    console.log(e.target.length.value);
-    console.log(e.target.location.value);
 
-    console.log(startDate);
+    const newFish = {
+      id: nanoid(),
+      fishname: e.target.name.value,
+      fishweight: e.target.weight.value,
+      fishlength: e.target.length.value,
+      location: e.target.location.value,
+      date: startDate,
+    };
+    setFishList(newFish);
+    console.log(fishList);
   };
 
+  const localStorageTestFunction = () => {
+    console.log(fishList);
+  };
   return (
     <div>
       <h1>This is the Add Page - Under Construction</h1>
@@ -26,6 +46,8 @@ export default function Add() {
             type="text"
             id="name"
             name="name"
+            minLength="5"
+            maxLength="15"
             placeholder="z.B. Lachs"
             required
           />
@@ -52,33 +74,47 @@ export default function Add() {
             required
           />
           <StyledInput htmlFor="location">Location: </StyledInput>
-          <input type="text" id="location" name="location" required />
-
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={15}
-            timeCaption="time"
-            dateFormat="d MMMM, yyyy h:mm aa"
-            withPortal
+          <input
+            type="text"
+            id="location"
+            name="location"
+            minLength="5"
+            maxLength="15"
+            placeholder="z.B. Kristiansand"
+            required
           />
+          <DatePickerContainer>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              timeCaption="time"
+              dateFormat="d MMMM, yyyy h:mm aa"
+              withPortal
+            />
+          </DatePickerContainer>
         </StyledField>
 
         <StyledButton type="submit">Submit</StyledButton>
       </StyledForm>
+      <button onClick={localStorageTestFunction}>
+        Click me to test the LocalStorage
+      </button>
     </div>
   );
 }
-
+const DatePickerContainer = styled.div`
+  margin-top: 0.7rem;
+  width: 100%;
+`;
 const StyledInput = styled.label`
-  padding: 0.3rem 0;
+  margin: 0.7rem 0;
 `;
 const StyledForm = styled.form`
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
-  background-color: red;
   padding: 1rem;
 `;
 const StyledField = styled.fieldset`
