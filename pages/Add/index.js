@@ -11,12 +11,12 @@ import { nanoid } from "nanoid";
 export default function Add() {
   const [startDate, setStartDate] = useState(new Date());
   const [fishList, setFishList] = useState(
-    loadLocalStorage("localfFishList") ?? []
+    loadLocalStorage("localFishList") ?? []
   );
 
   useEffect(() => {
-    setLocalStorage("localfFishList", fishList);
-  });
+    setLocalStorage("localFishList", fishList);
+  }, [fishList]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
