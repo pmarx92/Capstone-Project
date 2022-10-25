@@ -60,7 +60,7 @@ export default function Add() {
             step="0.10"
             min="0"
             max="100"
-            placeholder="z.B. 12.0kg"
+            placeholder="z.B. 12.0"
             required
           />
           <StyledInput htmlFor="length">Length in Meter: </StyledInput>
@@ -68,7 +68,7 @@ export default function Add() {
             type="number"
             id="length"
             name="length"
-            placeholder="z.B. 3m"
+            placeholder="z.B. 3"
             step="0.10"
             min="0"
             max="100"
