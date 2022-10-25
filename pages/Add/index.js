@@ -102,7 +102,7 @@ export default function Add() {
       </StyledForm>
 
       <button onClick={localStorageTestFunction}>
-        Click me to test the LocalStorage
+        Click me to test the LocalStorage - console.log
       </button>
     </div>
   );
