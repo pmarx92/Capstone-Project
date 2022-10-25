@@ -13,26 +13,34 @@ function Navigation() {
   return (
     <Container>
       <UnorderedList>
-        <Link href="/" passHref>
-          <StyledList active={pathname === "/"}>
-            <Image src={HomeSVG} height="175" />
-          </StyledList>
-        </Link>
-        <Link href="/Map" passHref>
-          <StyledList active={pathname === "/Map"}>
-            <Image src={Map} height="175" />
-          </StyledList>
-        </Link>
-        <Link href="/List" passHref>
-          <StyledList active={pathname === "../List"}>
-            <Image src={List} height="175" />
-          </StyledList>
-        </Link>
-        <Link href="/Add" passHref>
-          <StyledList active={pathname === "../Add"}>
-            <Image src={Add} height="175" />
-          </StyledList>
-        </Link>
+        <StyledList>
+          <Link aria-label="Browse to Home" href="/" passHref>
+            <Anchor active={pathname === "/"}>
+              <Image src={HomeSVG} height="175" />
+            </Anchor>
+          </Link>
+        </StyledList>
+        <StyledList>
+          <Link aria-label="Browse the map page" href="/Map" passHref>
+            <Anchor active={pathname === "/Map"}>
+              <Image src={Map} height="175" />
+            </Anchor>
+          </Link>
+        </StyledList>
+        <StyledList>
+          <Link aria-label="Browse the list page" href="/List" passHref>
+            <Anchor active={pathname === "../List"}>
+              <Image src={List} height="175" />
+            </Anchor>
+          </Link>
+        </StyledList>
+        <StyledList>
+          <Link aria-label="Browse to the form page" href="/Add" passHref>
+            <Anchor active={pathname === "../Add"}>
+              <Image src={Add} height="175" />
+            </Anchor>
+          </Link>
+        </StyledList>
       </UnorderedList>
     </Container>
   );
@@ -43,14 +51,17 @@ const Container = styled.div`
 `;
 const UnorderedList = styled.ul`
   display: flex;
-  flex-direction: row;
   list-style-type: none;
   box-shadow: 0 0 10px gray;
 `;
 const StyledList = styled.li`
+  display: flex;
+  justify-content: center;
+`;
+const Anchor = styled.a`
   text-decoration: none;
   transition: 0.9s;
-  padding: 20px;
+  padding: 1.4em;
   background-color: ${({ active }) => (active ? "green" : "lightgreen")};
 
   &:hover {
