@@ -1,6 +1,7 @@
 import Head from "next/head";
 import styled from "styled-components";
 import Header from "../components/Header/Header";
+import Navigation from "../components/Navigation/Navigation";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       </Head>
 
       <Main></Main>
+      <Navigation />
     </div>
   );
 }
