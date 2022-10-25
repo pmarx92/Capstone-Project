@@ -11,6 +11,9 @@ export default function Add() {
     console.log(e.target.name.value);
     console.log(e.target.weight.value);
     console.log(e.target.length.value);
+    console.log(e.target.location.value);
+
+    console.log(startDate);
   };
 
   return (
@@ -19,11 +22,38 @@ export default function Add() {
       <StyledForm onSubmit={handleSubmit}>
         <StyledField>
           <StyledInput htmlFor="name">Fish Name: </StyledInput>
-          <input type="text" id="name" name="name" required></input>
-          <StyledInput htmlFor="weight">Weight: </StyledInput>
-          <input type="number" id="weight" name="weight" required></input>
-          <StyledInput htmlFor="Length">Length: </StyledInput>
-          <input type="number" id="length" name="length" required></input>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="z.B. Lachs"
+            required
+          />
+          <StyledInput htmlFor="weight">Weight in kg: </StyledInput>
+          <input
+            type="number"
+            id="weight"
+            name="weight"
+            step="0.10"
+            min="0"
+            max="100"
+            placeholder="z.B. 12.0kg"
+            required
+          />
+          <StyledInput htmlFor="length">Length in Meter: </StyledInput>
+          <input
+            type="number"
+            id="length"
+            name="length"
+            placeholder="z.B. 3m"
+            step="0.10"
+            min="0"
+            max="100"
+            required
+          />
+          <StyledInput htmlFor="location">Location: </StyledInput>
+          <input type="text" id="location" name="location" required />
+
           <DatePicker
             selected={startDate}
             onChange={(date) => setStartDate(date)}
