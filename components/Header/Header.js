@@ -10,7 +10,7 @@ function Header() {
 
 const Background = styled.div`
   background-color: lightgreen;
-  padding: 20px;
+  padding: 2em;
   box-shadow: 0 0 10px grey;
 `;
 const StyledHeadline = styled.h1`
