@@ -10,8 +10,11 @@
     "test": "jest --watch"
   },
   "dependencies": {
+    "babel-plugin-styled-components": "^2.0.7",
     "next": "12.3.1",
     "react": "18.2.0",
+    "react-datepicker": "^4.8.0",
+    "react-datetime-picker": "^4.0.1",
     "react-dom": "18.2.0",
     "styled-components": "^5.3.6"
   },
