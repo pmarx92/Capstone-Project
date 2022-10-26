@@ -24,8 +24,8 @@ export default function Add() {
     const newFish = {
       id: nanoid(),
       fishname: e.target.name.value,
-      fishweight: e.target.weight.value,
-      fishlength: e.target.length.value,
+      fishweight: +e.target.weight.value,
+      fishlength: +e.target.length.value,
       location: e.target.location.value,
       date: startDate,
     };
