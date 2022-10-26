@@ -21,11 +21,6 @@ export default function Add({ fishList, setFishList }) {
     setFishList([...fishList].concat(newFish));
   };
 
-  // Test Function so you can test the LocalStorage easy
-  const localStorageTestFunction = () => {
-    console.log(fishList);
-  };
-
   return (
     <div>
       <h1>This is the Add Page - Under Construction</h1>
@@ -36,7 +31,7 @@ export default function Add({ fishList, setFishList }) {
             type="text"
             id="name"
             name="name"
-            minLength="5"
+            minLength="3"
             maxLength="15"
             placeholder="z.B. Lachs"
             required
@@ -89,10 +84,6 @@ export default function Add({ fishList, setFishList }) {
 
         <StyledButton type="submit">Submit</StyledButton>
       </StyledForm>
-
-      <button onClick={localStorageTestFunction}>
-        Click me to test the LocalStorage - console.log
-      </button>
     </div>
   );
 }
