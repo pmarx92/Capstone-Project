@@ -7,9 +7,9 @@ export default function List({ fishList }) {
       <Container>
         {fishList.map((fish) => (
           <Card key={fish.id}>
-            <StyledParagraph>Name: {fish.fishname}</StyledParagraph>
-            <StyledParagraph>Weight: {fish.fishweight}kg</StyledParagraph>
-            <StyledParagraph>Length: {fish.fishlength}m</StyledParagraph>
+            <StyledParagraph>Name: {fish.fishName}</StyledParagraph>
+            <StyledParagraph>Weight: {fish.fishWeight}kg</StyledParagraph>
+            <StyledParagraph>Length: {fish.fishLength}m</StyledParagraph>
             <StyledParagraph>Location: {fish.location}</StyledParagraph>
             <StyledParagraph>Date: {fish.date}</StyledParagraph>
           </Card>
