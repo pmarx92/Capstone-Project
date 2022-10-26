@@ -71,7 +71,7 @@ export default function Add() {
             placeholder="z.B. 3"
             step="0.10"
             min="0"
-            max="100"
+            max="10"
             required
           />
           <StyledLabel htmlFor="location">Location: </StyledLabel>
