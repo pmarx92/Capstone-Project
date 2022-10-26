@@ -16,7 +16,7 @@ export default function Add({ fishList, setFishList }) {
       fishweight: +e.target.weight.value,
       fishlength: +e.target.length.value,
       location: e.target.location.value,
-      date: startDate,
+      date: startDate.toString(),
     };
     setFishList([...fishList].concat(newFish));
   };
