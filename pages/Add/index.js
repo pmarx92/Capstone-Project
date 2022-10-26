@@ -1,22 +1,11 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  setLocalStorage,
-  loadLocalStorage,
-} from "../../components/LocalStorage";
 import { nanoid } from "nanoid";
 
-export default function Add() {
+export default function Add({ fishList, setFishList }) {
   const [startDate, setStartDate] = useState(new Date());
-  const [fishList, setFishList] = useState(
-    loadLocalStorage("localFishList") ?? []
-  );
-
-  useEffect(() => {
-    setLocalStorage("localFishList", fishList);
-  }, [fishList]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -107,6 +96,7 @@ export default function Add() {
     </div>
   );
 }
+
 const DatePickerContainer = styled.div`
   margin-top: 0.7rem;
   width: 100%;
