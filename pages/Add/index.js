@@ -1,40 +1,24 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  setLocalStorage,
-  loadLocalStorage,
-} from "../../components/LocalStorage";
 import { nanoid } from "nanoid";
 
-export default function Add() {
+export default function Add({ fishList, setFishList }) {
   const [startDate, setStartDate] = useState(new Date());
-  const [fishList, setFishList] = useState(
-    loadLocalStorage("localFishList") ?? []
-  );
-
-  useEffect(() => {
-    setLocalStorage("localFishList", fishList);
-  }, [fishList]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const newFish = {
       id: nanoid(),
-      fishname: e.target.name.value,
-      fishweight: +e.target.weight.value,
-      fishlength: +e.target.length.value,
+      fishName: e.target.name.value,
+      fishWeight: +e.target.weight.value,
+      fishLength: +e.target.length.value,
       location: e.target.location.value,
-      date: startDate,
+      date: startDate.toISOString(),
     };
     setFishList([...fishList].concat(newFish));
-  };
-
-  // Test Function so you can test the LocalStorage easy
-  const localStorageTestFunction = () => {
-    console.log(fishList);
   };
 
   return (
@@ -47,7 +31,7 @@ export default function Add() {
             type="text"
             id="name"
             name="name"
-            minLength="5"
+            minLength="3"
             maxLength="15"
             placeholder="z.B. Lachs"
             required
@@ -100,13 +84,10 @@ export default function Add() {
 
         <StyledButton type="submit">Submit</StyledButton>
       </StyledForm>
-
-      <button onClick={localStorageTestFunction}>
-        Click me to test the LocalStorage - console.log
-      </button>
     </div>
   );
 }
+
 const DatePickerContainer = styled.div`
   margin-top: 0.7rem;
   width: 100%;
