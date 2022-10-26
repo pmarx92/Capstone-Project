@@ -42,7 +42,7 @@ export default function Add() {
       <h1>This is the Add Page - Under Construction</h1>
       <StyledForm onSubmit={handleSubmit}>
         <StyledField>
-          <StyledInput htmlFor="name">Fish Name: </StyledInput>
+          <StyledLabel htmlFor="name">Fish Name: </StyledLabel>
           <input
             type="text"
             id="name"
@@ -52,7 +52,7 @@ export default function Add() {
             placeholder="z.B. Lachs"
             required
           />
-          <StyledInput htmlFor="weight">Weight in kg: </StyledInput>
+          <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
           <input
             type="number"
             id="weight"
@@ -63,7 +63,7 @@ export default function Add() {
             placeholder="z.B. 12.0"
             required
           />
-          <StyledInput htmlFor="length">Length in Meter: </StyledInput>
+          <StyledLabel htmlFor="length">Length in Meter: </StyledLabel>
           <input
             type="number"
             id="length"
@@ -74,7 +74,7 @@ export default function Add() {
             max="100"
             required
           />
-          <StyledInput htmlFor="location">Location: </StyledInput>
+          <StyledLabel htmlFor="location">Location: </StyledLabel>
           <input
             type="text"
             id="location"
@@ -111,7 +111,7 @@ const DatePickerContainer = styled.div`
   margin-top: 0.7rem;
   width: 100%;
 `;
-const StyledInput = styled.label`
+const StyledLabel = styled.label`
   margin: 0.7rem 0;
 `;
 const StyledForm = styled.form`
