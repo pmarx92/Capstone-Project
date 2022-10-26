@@ -59,7 +59,7 @@ export default function Add() {
             name="weight"
             step="0.10"
             min="0"
-            max="100"
+            max="25"
             placeholder="z.B. 12.0"
             required
           />
