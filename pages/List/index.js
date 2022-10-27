@@ -1,29 +1,138 @@
 import styled from "styled-components";
+import DatePicker from "react-datepicker";
+import { useState, useEffect } from "react";
+import { setLocalStorage } from "../../components/LocalStorage";
 
-export default function List({ fishList }) {
+export default function List({
+  fishList,
+  setFishList,
+  startDate,
+  setStartDate,
+}) {
+  const [storedId, setStoredId] = useState([]);
+  const [editFishName, setEditFishName] = useState("");
+  const [editFishWeight, setEditFishWeight] = useState("");
+  const [editFisLength, setEditFishLength] = useState("");
+  const [editFishLocation, setEditFishLocation] = useState("");
+
+  useEffect(() => {
+    setLocalStorage("localFishList", fishList);
+  });
+
+  const deleteCard = (id) => {
+    setFishList([...fishList].filter((fish) => fish.id !== id));
+  };
+
+  const editCard = (id) => {
+    setStoredId(
+      [...fishList].map((fish) =>
+        fish.id === id
+          ? ((fish.fishName = editFishName),
+            (fish.fishWeight = editFishWeight),
+            (fish.fishLength = editFisLength),
+            (fish.location = editFishLocation),
+            (fish.date = startDate.toISOString()))
+          : fish
+      )
+    );
+  };
+
   return (
     <div>
       <h1>This is the List Page - Under Construction</h1>
       <Container>
         {fishList.map((fish) => (
           <Card key={fish.id}>
-            <StyledParagraph>Name: {fish.fishName}</StyledParagraph>
-            <StyledParagraph>Weight: {fish.fishWeight}kg</StyledParagraph>
-            <StyledParagraph>Length: {fish.fishLength}m</StyledParagraph>
-            <StyledParagraph>Location: {fish.location}</StyledParagraph>
-            <StyledParagraph>Date: {fish.date}</StyledParagraph>
+            {storedId === fish.id ? (
+              <button onClick={() => editCard(fish.id)}>Submit Edit</button>
+            ) : (
+              <StyledBtn onClick={() => setStoredId(fish.id)}>Edit</StyledBtn>
+            )}
+            <StyledBtn onClick={() => deleteCard(fish.id)}>x</StyledBtn>
+            {storedId === fish.id ? (
+              <StyledField>
+                <StyledLabel htmlFor="name">Fish Name: </StyledLabel>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  minLength="3"
+                  maxLength="15"
+                  placeholder="z.B. Lachs"
+                  onChange={(e) => setEditFishName(e.target.value)}
+                  required
+                />
+                <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
+                <input
+                  type="number"
+                  id="weight"
+                  name="weight"
+                  step="0.10"
+                  min="0"
+                  max="25"
+                  placeholder="z.B. 12.0"
+                  onChange={(e) => setEditFishWeight(e.target.value)}
+                  required
+                />
+                <StyledLabel htmlFor="length">Length in Meter: </StyledLabel>
+                <input
+                  type="number"
+                  id="length"
+                  name="length"
+                  placeholder="z.B. 3"
+                  step="0.10"
+                  min="0"
+                  max="10"
+                  onChange={(e) => setEditFishLength(e.target.value)}
+                  required
+                />
+                <StyledLabel htmlFor="location">Location: </StyledLabel>
+                <input
+                  type="text"
+                  id="location"
+                  name="location"
+                  minLength="5"
+                  maxLength="15"
+                  placeholder="z.B. Kristiansand"
+                  onChange={(e) => setEditFishLocation(e.target.value)}
+                  required
+                />
+                <DatePickerContainer>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    timeCaption="time"
+                    dateFormat="h:mm aa d MMMM, yyyy "
+                    withPortal
+                  />
+                </DatePickerContainer>
+              </StyledField>
+            ) : (
+              <div>
+                <StyledParagraph>Name: {fish.fishName}</StyledParagraph>
+                <StyledParagraph>Weight: {fish.fishWeight}kg</StyledParagraph>
+                <StyledParagraph>Length: {fish.fishLength}m</StyledParagraph>
+                <StyledParagraph>Location: {fish.location}</StyledParagraph>
+                <StyledParagraph>Date: {fish.date}</StyledParagraph>
+              </div>
+            )}
           </Card>
         ))}
       </Container>
     </div>
   );
 }
+const StyledBtn = styled.button`
+  width: 20%;
+`;
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
-
 const Card = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,4 +148,26 @@ const Card = styled.div`
 
 const StyledParagraph = styled.p`
   padding: 0.1rem;
+`;
+const DatePickerContainer = styled.div`
+  margin-top: 0.7rem;
+  width: 100%;
+`;
+const StyledLabel = styled.label`
+  margin: 0.7rem 0;
+`;
+const StyledForm = styled.form`
+  width: 80%;
+  margin: 0 auto;
+  padding: 1rem;
+`;
+const StyledField = styled.fieldset`
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+`;
+const StyledButton = styled.button`
+  display: flex;
+  margin: 1rem auto;
+  padding: 0.3rem;
 `;

@@ -1,17 +1,18 @@
 import GlobalStyle from "../components/GlobalStyle";
 import Layout from "../pages/Layout";
 import "react-datepicker/dist/react-datepicker.css";
-import { setLocalStorage, loadLocalStorage } from "../components/LocalStorage";
+import { loadLocalStorage } from "../components/LocalStorage";
 import { useEffect, useState } from "react";
 
 function MyApp({ Component, pageProps }) {
+  const [startDate, setStartDate] = useState(new Date());
   const [fishList, setFishList] = useState(
     loadLocalStorage("localFishList") ?? []
   );
-
-  useEffect(() => {
-    setLocalStorage("localFishList", fishList);
-  }, [fishList]);
+  const [fishName, setFishName] = useState("");
+  const [fishWeight, setFishWeight] = useState();
+  const [fishLength, setFishLength] = useState();
+  const [fishLocation, setFishLocation] = useState("");
 
   // To prevent the hydration error
   const [showChild, setShowChild] = useState(false);
@@ -31,6 +32,16 @@ function MyApp({ Component, pageProps }) {
           {...pageProps}
           fishList={fishList}
           setFishList={setFishList}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          fishName={fishName}
+          setFishName={setFishName}
+          fishWeight={fishWeight}
+          setFishWeight={setFishWeight}
+          fishLength={fishLength}
+          setFishLength={setFishLength}
+          fishLocation={fishLocation}
+          setFishLocation={setFishLocation}
         />
       </Layout>
     </>
