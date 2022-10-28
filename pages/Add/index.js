@@ -2,6 +2,7 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { nanoid } from "nanoid";
+import Map from "../../components/map/index";
 
 export default function Add({
   fishList,
@@ -33,7 +34,7 @@ export default function Add({
 
   return (
     <div>
-      <h1>This is the Add Page - Under Construction</h1>
+      <Map />
       <StyledForm onSubmit={handleSubmit}>
         <StyledField>
           <StyledLabel htmlFor="name">Fish Name: </StyledLabel>
@@ -111,7 +112,7 @@ const StyledLabel = styled.label`
 `;
 const StyledForm = styled.form`
   width: 80%;
-  margin: 0 auto;
+  margin: 5rem auto;
   padding: 1rem;
 `;
 const StyledField = styled.fieldset`
