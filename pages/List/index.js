@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import { useState, useEffect } from "react";
-import { setLocalStorage } from "../../components/LocalStorage";
+import useLocalStorage from "../../components/hooks/LocalStorage";
 
 export default function List({
   fishList,
@@ -14,10 +14,6 @@ export default function List({
   const [editFishWeight, setEditFishWeight] = useState("");
   const [editFisLength, setEditFishLength] = useState("");
   const [editFishLocation, setEditFishLocation] = useState("");
-
-  useEffect(() => {
-    setLocalStorage("localFishList", fishList);
-  });
 
   const deleteCard = (id) => {
     setFishList([...fishList].filter((fish) => fish.id !== id));
