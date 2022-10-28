@@ -6,11 +6,10 @@ import styled from "styled-components";
 export default function Map() {
   return (
     <>
-      <Headline>Leaflet Map</Headline>
       <MapContainer
         center={[58.034125450605316, 7.454502477686363]}
         zoom={11}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
         onClick={(event) => getCoord(event.latlng)}
         style={{
           width: "70%",
