@@ -12,16 +12,6 @@ function MyApp({ Component, pageProps }) {
   const [fishLength, setFishLength] = useState();
   const [fishLocation, setFishLocation] = useState("");
 
-  // To prevent the hydration error
-  /*   const [showChild, setShowChild] = useState(false);
-  useEffect(() => {
-    setShowChild(true);
-  }, []);
-
-  if (!showChild) {
-    return null;
-  } */
-
   return (
     <>
       <GlobalStyle />

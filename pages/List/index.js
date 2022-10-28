@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
-import { useState, useEffect } from "react";
-import useLocalStorage from "../../components/hooks/LocalStorage";
-
+import { useState } from "react";
 export default function List({
   fishList,
   setFishList,
@@ -16,23 +14,26 @@ export default function List({
   const [editFishLocation, setEditFishLocation] = useState("");
 
   const deleteCard = (id) => {
-    setFishList([...fishList].filter((fish) => fish.id !== id));
+    setFishList(fishList.filter((fish) => fish.id !== id));
   };
 
   const editCard = (id) => {
-    setStoredId(
-      [...fishList].map((fish) =>
+    setFishList(
+      fishList.map((fish) =>
         fish.id === id
-          ? ((fish.fishName = editFishName),
-            (fish.fishWeight = editFishWeight),
-            (fish.fishLength = editFisLength),
-            (fish.location = editFishLocation),
-            (fish.date = startDate.toISOString()))
+          ? {
+              id,
+              fishName: editFishName,
+              fishWeight: editFishWeight,
+              fishLength: editFisLength,
+              location: editFishLocation,
+              date: startDate.toISOString(),
+            }
           : fish
       )
     );
+    setStoredId([]);
   };
-
   return (
     <div>
       <h1>This is the List Page - Under Construction</h1>
@@ -136,12 +137,10 @@ const Card = styled.div`
   box-shadow: 0 0 10px black;
   padding: 1rem;
   margin: 1rem;
-
   &:hover {
     margin: 1.1rem;
   }
 `;
-
 const StyledParagraph = styled.p`
   padding: 0.1rem;
 `;
