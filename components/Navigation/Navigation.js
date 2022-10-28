@@ -47,7 +47,7 @@ function Navigation() {
 }
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 0px;
 `;
 const UnorderedList = styled.ul`
