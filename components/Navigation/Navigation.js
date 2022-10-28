@@ -47,7 +47,8 @@ function Navigation() {
 }
 
 const Container = styled.div`
-  margin-top: 100vh;
+  position: absolute;
+  bottom: 0px;
 `;
 const UnorderedList = styled.ul`
   display: flex;

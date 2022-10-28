@@ -1,21 +1,31 @@
 import styled from "styled-components";
-import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { nanoid } from "nanoid";
 
-export default function Add({ fishList, setFishList }) {
-  const [startDate, setStartDate] = useState(new Date());
-
+export default function Add({
+  fishList,
+  setFishList,
+  startDate,
+  setStartDate,
+  fishName,
+  setFishName,
+  fishWeight,
+  setFishWeight,
+  fishLength,
+  setFishLength,
+  fishLocation,
+  setFishLocation,
+}) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const newFish = {
       id: nanoid(),
-      fishName: e.target.name.value,
-      fishWeight: +e.target.weight.value,
-      fishLength: +e.target.length.value,
-      location: e.target.location.value,
+      fishName: fishName,
+      fishWeight: +fishWeight,
+      fishLength: +fishLength,
+      location: fishLocation,
       date: startDate.toISOString(),
     };
     setFishList([...fishList].concat(newFish));
@@ -34,6 +44,7 @@ export default function Add({ fishList, setFishList }) {
             minLength="3"
             maxLength="15"
             placeholder="z.B. Lachs"
+            onChange={(e) => setFishName(e.target.value)}
             required
           />
           <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -45,6 +56,7 @@ export default function Add({ fishList, setFishList }) {
             min="0"
             max="25"
             placeholder="z.B. 12.0"
+            onChange={(e) => setFishWeight(e.target.value)}
             required
           />
           <StyledLabel htmlFor="length">Length in Meter: </StyledLabel>
@@ -56,6 +68,7 @@ export default function Add({ fishList, setFishList }) {
             step="0.10"
             min="0"
             max="10"
+            onChange={(e) => setFishLength(e.target.value)}
             required
           />
           <StyledLabel htmlFor="location">Location: </StyledLabel>
@@ -66,6 +79,7 @@ export default function Add({ fishList, setFishList }) {
             minLength="5"
             maxLength="15"
             placeholder="z.B. Kristiansand"
+            onChange={(e) => setFishLocation(e.target.value)}
             required
           />
           <DatePickerContainer>
@@ -76,7 +90,7 @@ export default function Add({ fishList, setFishList }) {
               timeFormat="HH:mm"
               timeIntervals={15}
               timeCaption="time"
-              dateFormat="d MMMM, yyyy h:mm aa"
+              dateFormat="h:mm aa d MMMM, yyyy "
               withPortal
             />
           </DatePickerContainer>
