@@ -51,10 +51,10 @@ export default function Map() {
         scrollWheelZoom={true}
         style={{
           width: "70%",
-          height: "37rem",
+          height: "36rem",
           borderRadius: "40px",
           boxShadow: "0 0 10px black",
-          margin: "3rem auto",
+          margin: "2rem auto",
         }}
       >
         <ClickHandler />

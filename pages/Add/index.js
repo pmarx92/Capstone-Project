@@ -34,8 +34,8 @@ export default function Add({
 
   return (
     <div>
+      <Map />
       <StyledForm onSubmit={handleSubmit}>
-        <Map />
         <StyledField>
           <StyledLabel htmlFor="name">Fish Name: </StyledLabel>
           <input
