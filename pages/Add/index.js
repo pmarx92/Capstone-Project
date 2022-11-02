@@ -43,21 +43,23 @@ export default function Add({
     setFishWeight("");
     setFishLength("");
     setFishLocation("");
-    console.log(e);
   };
 
   return (
     <div>
       <Map />
       <StyledForm onSubmit={handleSubmit}>
-        <Modal open={opened} close={() => setOpened(!opened)}>
-          <p>You&apos;re input has been added to the List!</p>
-          <Link aria-label="Browse the list page" href="/List" passHref>
-            <Anchor active={pathname === "../List"}>
-              <p>Move to the List!</p>
-            </Anchor>
-          </Link>
-        </Modal>
+        {opened ? (
+          <Modal open={opened} close={() => setOpened(!opened)}>
+            <p>You&apos;re input has been added to the List!</p>
+            <Link aria-label="Browse the list page" href="/List" passHref>
+              <Anchor active={pathname === "../List"}>
+                <p>Move to the List!</p>
+              </Anchor>
+            </Link>
+          </Modal>
+        ) : null}
+
         <StyledField>
           <StyledLabel htmlFor="name">Fish Name: </StyledLabel>
           <input

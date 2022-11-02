@@ -1,11 +1,9 @@
 import styled from "styled-components";
 
-export default function Modal({ open, close, children }) {
-  if (!open) return null;
-
+export default function Modal({ close, children }) {
   return (
     <>
-      <StyledBackground></StyledBackground>
+      <StyledBackground />
       <StyledPopup>
         {children}
         <button onClick={close}>Close</button>
