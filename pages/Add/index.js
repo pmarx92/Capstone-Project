@@ -123,5 +123,6 @@ const StyledField = styled.fieldset`
 const StyledButton = styled.button`
   display: flex;
   margin: 1rem auto;
+  margin-bottom: 7rem;
   padding: 0.3rem;
 `;
