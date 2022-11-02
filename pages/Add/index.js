@@ -30,7 +30,6 @@ export default function Add({
       date: startDate.toISOString(),
     };
     setFishList([...fishList].concat(newFish));
-    console.log(e);
   };
 
   return (
@@ -96,7 +95,6 @@ export default function Add({
               withPortal
             />
           </DatePickerContainer>
-          {/* <input type="text" id="latlng" required /> */}
         </StyledField>
 
         <StyledButton type="submit">Submit</StyledButton>
