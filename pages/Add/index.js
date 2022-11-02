@@ -24,6 +24,7 @@ export default function Add({
 }) {
   const [opened, setOpened] = useState(false);
   const { pathname } = useRouter();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -35,12 +36,14 @@ export default function Add({
       location: fishLocation,
       date: startDate.toISOString(),
     };
+
     setFishList([...fishList].concat(newFish));
     setOpened(!opened);
     setFishName("");
     setFishWeight("");
     setFishLength("");
     setFishLocation("");
+    console.log(e);
   };
 
   return (
@@ -65,6 +68,7 @@ export default function Add({
             maxLength="15"
             placeholder="z.B. Lachs"
             onChange={(e) => setFishName(e.target.value)}
+            pattern="[^\s]+"
             value={fishName}
             required
           />
@@ -74,21 +78,21 @@ export default function Add({
             id="weight"
             name="weight"
             step="0.10"
-            min="0"
-            max="25"
-            placeholder="z.B. 12.0"
+            min=".50"
+            max="1.5"
+            placeholder="z.B. 0.70"
             onChange={(e) => setFishWeight(e.target.value)}
             value={fishWeight}
             required
           />
-          <StyledLabel htmlFor="length">Length in Meter: </StyledLabel>
+          <StyledLabel htmlFor="length">Length in cm: </StyledLabel>
           <input
             type="number"
             id="length"
             name="length"
             placeholder="z.B. 3"
             step="0.10"
-            min="0"
+            min="0.3"
             max="10"
             onChange={(e) => setFishLength(e.target.value)}
             value={fishLength}
