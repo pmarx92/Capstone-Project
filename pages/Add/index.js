@@ -3,6 +3,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { nanoid } from "nanoid";
 import Map from "../../components/map/index";
+import Modal from "../../components/modal/index";
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Add({
   fishList,
@@ -18,6 +22,8 @@ export default function Add({
   fishLocation,
   setFishLocation,
 }) {
+  const [opened, setOpened] = useState(false);
+  const { pathname } = useRouter();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -30,12 +36,25 @@ export default function Add({
       date: startDate.toISOString(),
     };
     setFishList([...fishList].concat(newFish));
+    setOpened(!opened);
+    setFishName("");
+    setFishWeight("");
+    setFishLength("");
+    setFishLocation("");
   };
 
   return (
     <div>
       <Map />
       <StyledForm onSubmit={handleSubmit}>
+        <Modal open={opened} close={() => setOpened(!opened)}>
+          <p>You're input has been added to the List!</p>
+          <Link aria-label="Browse the list page" href="/List" passHref>
+            <Anchor active={pathname === "../List"}>
+              <p>Move to the List!</p>
+            </Anchor>
+          </Link>
+        </Modal>
         <StyledField>
           <StyledLabel htmlFor="name">Fish Name: </StyledLabel>
           <input
@@ -46,6 +65,7 @@ export default function Add({
             maxLength="15"
             placeholder="z.B. Lachs"
             onChange={(e) => setFishName(e.target.value)}
+            value={fishName}
             required
           />
           <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -58,6 +78,7 @@ export default function Add({
             max="25"
             placeholder="z.B. 12.0"
             onChange={(e) => setFishWeight(e.target.value)}
+            value={fishWeight}
             required
           />
           <StyledLabel htmlFor="length">Length in Meter: </StyledLabel>
@@ -70,6 +91,7 @@ export default function Add({
             min="0"
             max="10"
             onChange={(e) => setFishLength(e.target.value)}
+            value={fishLength}
             required
           />
           <StyledLabel htmlFor="location">Location: </StyledLabel>
@@ -81,6 +103,7 @@ export default function Add({
             maxLength="15"
             placeholder="z.B. Kristiansand"
             onChange={(e) => setFishLocation(e.target.value)}
+            value={fishLocation}
             required
           />
           <DatePickerContainer>
@@ -125,4 +148,10 @@ const StyledButton = styled.button`
   margin: 1rem auto;
   margin-bottom: 7rem;
   padding: 0.3rem;
+`;
+const Anchor = styled.a`
+  text-decoration: none;
+  transition: 0.9s;
+  padding: 1.4em;
+  margin: 1rem auto;
 `;
