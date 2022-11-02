@@ -48,7 +48,7 @@ export default function Add({
       <Map />
       <StyledForm onSubmit={handleSubmit}>
         <Modal open={opened} close={() => setOpened(!opened)}>
-          <p>You're input has been added to the List!</p>
+          <p>You&apos;re input has been added to the List!</p>
           <Link aria-label="Browse the list page" href="/List" passHref>
             <Anchor active={pathname === "../List"}>
               <p>Move to the List!</p>
