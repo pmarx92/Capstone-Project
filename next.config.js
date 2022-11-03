@@ -5,6 +5,10 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  env: {
+    MONGO_URI:
+      "mongodb+srv://pama92:NMDUiJdGTqnQTEBp,@cluster0.e39w65n.mongodb.net/?retryWrites=true&w=majority",
+  },
 };
 
 module.exports = nextConfig;
