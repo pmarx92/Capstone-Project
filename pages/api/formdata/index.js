@@ -1,5 +1,5 @@
-import dbConnect from "../../utils/dbConnect";
-import Cards from "../../models/Cards";
+import dbConnect from "../../../utils/dbConnect";
+import Cards from "../../../models/Cards";
 
 dbConnect();
 
