@@ -7,7 +7,7 @@ const nextConfig = {
   },
   env: {
     MONGO_URI:
-      "mongodb+srv://pama92:NMDUiJdGTqnQTEBp,@cluster0.e39w65n.mongodb.net/?retryWrites=true&w=majority",
+      "mongodb+srv://pama92:KZdQ77pYC9Lu7mWk@cluster0.e39w65n.mongodb.net/?retryWrites=true&w=majority",
   },
 };
 
