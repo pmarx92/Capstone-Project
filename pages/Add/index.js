@@ -70,7 +70,7 @@ export default function Add({
             maxLength="15"
             placeholder="z.B. Lachs"
             onChange={(e) => setFishName(e.target.value)}
-            pattern="[^\s]+"
+            pattern="^(?!^ +$)([\w -&]+)$"
             value={fishName}
             required
           />
@@ -110,6 +110,7 @@ export default function Add({
             placeholder="z.B. Kristiansand"
             onChange={(e) => setFishLocation(e.target.value)}
             value={fishLocation}
+            pattern="^(?!^ +$)([\w -&]+)$"
             required
           />
           <DatePickerContainer>
