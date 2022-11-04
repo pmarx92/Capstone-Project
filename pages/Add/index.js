@@ -29,22 +29,28 @@ export default function Add({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    {
+      markerPosition.map((marker) => {
+        const newFish = {
+          id: nanoid(),
+          fishName: fishName,
+          fishWeight: +fishWeight,
+          fishLength: +fishLength,
+          location: fishLocation,
+          lat: marker.lat,
+          lng: marker.lng,
+          date: startDate.toISOString(),
+        };
 
-    const newFish = {
-      id: nanoid(),
-      fishName: fishName,
-      fishWeight: +fishWeight,
-      fishLength: +fishLength,
-      location: fishLocation,
-      date: startDate.toISOString(),
-    };
-
-    setFishList([...fishList].concat(newFish));
-    setOpened(!opened);
-    setFishName("");
-    setFishWeight("");
-    setFishLength("");
-    setFishLocation("");
+        setFishList([...fishList].concat(newFish));
+        setOpened(!opened);
+        setFishName("");
+        setFishWeight("");
+        setFishLength("");
+        setFishLocation("");
+        console.log(marker);
+      });
+    }
   };
 
   return (
@@ -52,6 +58,7 @@ export default function Add({
       <Map
         markerPosition={markerPosition}
         setMarkerPosition={setMarkerPosition}
+        fishList={fishList}
       />
       <StyledForm onSubmit={handleSubmit}>
         {opened ? (

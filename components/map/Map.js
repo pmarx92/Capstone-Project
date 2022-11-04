@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 import { nanoid } from "nanoid";
 import { useEffect } from "react";
 
-export default function Map({ markerPosition, setMarkerPosition }) {
+export default function Map({ markerPosition, setMarkerPosition, fishList }) {
   const [position, setPosition] = useState([
     58.034125450605316, 7.454502477686363,
   ]);
@@ -31,7 +31,7 @@ export default function Map({ markerPosition, setMarkerPosition }) {
   function CreateMarker() {
     const map = useMapEvents({});
     useEffect(() => {
-      markerPosition.map((marker) => {
+      fishList.map((marker) => {
         L.circle([marker.lat, marker.lng], { radius: 200 })
           .addTo(map)
           .bindPopup("I'm a Popup!")
