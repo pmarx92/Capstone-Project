@@ -24,7 +24,6 @@ export default function List({
       fishList.map((fish) =>
         fish.id === id
           ? {
-              id: nanoid(),
               fishName: editFishName,
               fishWeight: editFishWeight,
               fishLength: editFisLength,

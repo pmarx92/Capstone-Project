@@ -29,28 +29,26 @@ export default function Add({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    {
-      markerPosition.map((marker) => {
-        const newFish = {
-          id: nanoid(),
-          fishName: fishName,
-          fishWeight: +fishWeight,
-          fishLength: +fishLength,
-          location: fishLocation,
-          lat: marker.lat,
-          lng: marker.lng,
-          date: startDate.toISOString(),
-        };
 
-        setFishList([...fishList].concat(newFish));
-        setOpened(!opened);
-        setFishName("");
-        setFishWeight("");
-        setFishLength("");
-        setFishLocation("");
-        console.log(marker);
-      });
-    }
+    markerPosition.map((marker) => {
+      const newFish = {
+        id: nanoid(),
+        fishName: fishName,
+        fishWeight: +fishWeight,
+        fishLength: +fishLength,
+        location: fishLocation,
+        lat: marker.lat,
+        lng: marker.lng,
+        date: startDate.toISOString(),
+      };
+
+      setFishList([...fishList].concat(newFish));
+      setOpened(!opened);
+      setFishName("");
+      setFishWeight("");
+      setFishLength("");
+      setFishLocation("");
+    });
   };
 
   return (
