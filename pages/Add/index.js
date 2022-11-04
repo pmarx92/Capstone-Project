@@ -31,7 +31,7 @@ export default function Add({
     e.preventDefault();
 
     markerPosition.map((marker) => {
-      const newFish = {
+      const newFishItem = {
         id: nanoid(),
         fishName: fishName,
         fishWeight: +fishWeight,
@@ -42,7 +42,7 @@ export default function Add({
         date: startDate.toISOString(),
       };
 
-      setFishList([...fishList].concat(newFish));
+      setFishList([...fishList].concat(newFishItem));
       setOpened(!opened);
       setFishName("");
       setFishWeight("");

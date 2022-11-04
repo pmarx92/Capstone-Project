@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
-import { nanoid } from "nanoid";
 
 export default function List({
   fishList,
