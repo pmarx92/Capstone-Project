@@ -21,6 +21,8 @@ export default function Add({
   setFishLength,
   fishLocation,
   setFishLocation,
+  markerPosition,
+  setMarkerPosition,
 }) {
   const [opened, setOpened] = useState(false);
   const { pathname } = useRouter();
@@ -47,7 +49,10 @@ export default function Add({
 
   return (
     <div>
-      <Map />
+      <Map
+        markerPosition={markerPosition}
+        setMarkerPosition={setMarkerPosition}
+      />
       <StyledForm onSubmit={handleSubmit}>
         {opened ? (
           <Modal open={opened} close={() => setOpened(!opened)}>
