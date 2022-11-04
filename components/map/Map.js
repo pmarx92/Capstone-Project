@@ -34,7 +34,9 @@ export default function Map({ markerPosition, setMarkerPosition, fishList }) {
       fishList.map((marker) => {
         L.circle([marker.lat, marker.lng], { radius: 200 })
           .addTo(map)
-          .bindPopup("I'm a Popup!")
+          .bindPopup(
+            `Name: ${marker.fishName} <br> Weight: ${marker.fishWeight}kg <br> Length: ${marker.fishLength}cm`
+          )
           .openPopup();
       });
     }, []);
