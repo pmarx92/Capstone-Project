@@ -3,7 +3,6 @@ import { useMapEvents } from "react-leaflet/hooks";
 import { useState } from "react";
 import "leaflet/dist/leaflet.css";
 import { nanoid } from "nanoid";
-import useLocalStorage from "../hooks/LocalStorage";
 import { useEffect } from "react";
 
 export default function Map({ markerPosition, setMarkerPosition }) {
@@ -32,14 +31,12 @@ export default function Map({ markerPosition, setMarkerPosition }) {
   function CreateMarker() {
     const map = useMapEvents({});
     useEffect(() => {
-      {
-        markerPosition.map((marker) => {
-          L.circle([marker.lat, marker.lng], { radius: 200 })
-            .addTo(map)
-            .bindPopup("I'm a Popup!")
-            .openPopup();
-        });
-      }
+      markerPosition.map((marker) => {
+        L.circle([marker.lat, marker.lng], { radius: 200 })
+          .addTo(map)
+          .bindPopup("I'm a Popup!")
+          .openPopup();
+      });
     }, []);
   }
   return (
