@@ -62,6 +62,7 @@ export default function List({
                   maxLength="15"
                   placeholder="z.B. Lachs"
                   onChange={(e) => setEditFishName(e.target.value)}
+                  pattern="^(?!^ +$)([\w -&]+)$"
                   required
                 />
                 <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -70,9 +71,9 @@ export default function List({
                   id="weight"
                   name="weight"
                   step="0.10"
-                  min="0"
-                  max="25"
-                  placeholder="z.B. 12.0"
+                  min=".50"
+                  max="1.5"
+                  placeholder="z.B. 0.70"
                   onChange={(e) => setEditFishWeight(e.target.value)}
                   required
                 />
@@ -83,7 +84,7 @@ export default function List({
                   name="length"
                   placeholder="z.B. 3"
                   step="0.10"
-                  min="0"
+                  min="0.3"
                   max="10"
                   onChange={(e) => setEditFishLength(e.target.value)}
                   required
@@ -97,6 +98,7 @@ export default function List({
                   maxLength="15"
                   placeholder="z.B. Kristiansand"
                   onChange={(e) => setEditFishLocation(e.target.value)}
+                  pattern="^(?!^ +$)([\w -&]+)$"
                   required
                 />
                 <DatePickerContainer>
