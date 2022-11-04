@@ -6,11 +6,10 @@ import { nanoid } from "nanoid";
 import useLocalStorage from "../hooks/LocalStorage";
 import { useEffect } from "react";
 
-export default function Map() {
+export default function Map({ markerPosition, setMarkerPosition }) {
   const [position, setPosition] = useState([
     58.034125450605316, 7.454502477686363,
   ]);
-  const [markerPosition, setMarkerPosition] = useLocalStorage("marker", []);
 
   function ClickHandler() {
     const map = useMapEvents({});

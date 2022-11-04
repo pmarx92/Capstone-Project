@@ -12,6 +12,8 @@ function MyApp({ Component, pageProps }) {
   const [fishLength, setFishLength] = useState();
   const [fishLocation, setFishLocation] = useState("");
 
+  const [markerPosition, setMarkerPosition] = useLocalStorage("marker", []);
+
   return (
     <>
       <GlobalStyle />
@@ -30,6 +32,8 @@ function MyApp({ Component, pageProps }) {
           setFishLength={setFishLength}
           fishLocation={fishLocation}
           setFishLocation={setFishLocation}
+          markerPosition={markerPosition}
+          setMarkerPosition={setMarkerPosition}
         />
       </Layout>
     </>
