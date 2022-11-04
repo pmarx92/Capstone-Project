@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
+import { nanoid } from "nanoid";
+
 export default function List({
   fishList,
   setFishList,
@@ -22,16 +24,19 @@ export default function List({
       fishList.map((fish) =>
         fish.id === id
           ? {
-              id,
+              id: nanoid(),
               fishName: editFishName,
               fishWeight: editFishWeight,
               fishLength: editFisLength,
               location: editFishLocation,
+              lat: fish.lat,
+              lng: fish.lng,
               date: startDate.toISOString(),
             }
           : fish
       )
     );
+
     setStoredId([]);
   };
   return (
