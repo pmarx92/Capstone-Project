@@ -6,6 +6,7 @@ export default function List({
   setFishList,
   startDate,
   setStartDate,
+  fetchedData,
 }) {
   const [storedId, setStoredId] = useState([]);
   const [editFishName, setEditFishName] = useState("");
@@ -37,6 +38,17 @@ export default function List({
   return (
     <div>
       <h1>This is the List Page - Under Construction</h1>
+      {fetchedData.map((data) => {
+        console.log(data.name);
+        return (
+          <Card key={data._id}>
+            <h2>Name: {data.name}</h2>
+            <h3>Weight: {data.weight}</h3>
+            <h3>Length: {data.length}</h3>
+            <h3>Location: {data.location}</h3>
+          </Card>
+        );
+      })}
       <Container>
         {fishList.map((fish) => (
           <Card key={fish.id}>
@@ -122,6 +134,7 @@ export default function List({
     </div>
   );
 }
+
 const StyledBtn = styled.button`
   width: 20%;
 `;
