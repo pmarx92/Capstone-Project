@@ -11,8 +11,7 @@ function MyApp({ Component, pageProps }) {
   const [fishWeight, setFishWeight] = useState();
   const [fishLength, setFishLength] = useState();
   const [fishLocation, setFishLocation] = useState("");
-
-  const [markerPosition, setMarkerPosition] = useLocalStorage("marker", []);
+  const [markerPosition, setMarkerPosition] = useState([]);
 
   return (
     <>
