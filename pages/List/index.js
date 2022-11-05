@@ -61,6 +61,7 @@ export default function List({
                   placeholder="z.B. Lachs"
                   onChange={(e) => setEditFishName(e.target.value)}
                   pattern="^(?!^ +$)([\w -&]+)$"
+                  value={editFishName}
                   required
                 />
                 <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -72,6 +73,7 @@ export default function List({
                   min=".50"
                   max="1.5"
                   placeholder="z.B. 0.70"
+                  value={editFishWeight}
                   onChange={(e) => setEditFishWeight(e.target.value)}
                   required
                 />
@@ -84,6 +86,7 @@ export default function List({
                   step="0.10"
                   min="0.3"
                   max="10"
+                  value={setEditFishLength}
                   onChange={(e) => setEditFishLength(e.target.value)}
                   required
                 />
@@ -97,6 +100,7 @@ export default function List({
                   placeholder="z.B. Kristiansand"
                   onChange={(e) => setEditFishLocation(e.target.value)}
                   pattern="^(?!^ +$)([\w -&]+)$"
+                  value={editFishLocation}
                   required
                 />
                 <DatePickerContainer>
@@ -116,7 +120,7 @@ export default function List({
               <div>
                 <StyledParagraph>Name: {fish.fishName}</StyledParagraph>
                 <StyledParagraph>Weight: {fish.fishWeight}kg</StyledParagraph>
-                <StyledParagraph>Length: {fish.fishLength}m</StyledParagraph>
+                <StyledParagraph>Length: {fish.fishLength}cm</StyledParagraph>
                 <StyledParagraph>Location: {fish.location}</StyledParagraph>
                 <StyledParagraph>Date: {fish.date}</StyledParagraph>
               </div>
