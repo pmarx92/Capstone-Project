@@ -11,7 +11,7 @@ export default function List({
   const [storedId, setStoredId] = useState([]);
   const [editFishName, setEditFishName] = useState("");
   const [editFishWeight, setEditFishWeight] = useState("");
-  const [editFisLength, setEditFishLength] = useState("");
+  const [editFishLength, setEditFishLength] = useState("");
   const [editFishLocation, setEditFishLocation] = useState("");
 
   const deleteCard = (id) => {
@@ -25,7 +25,7 @@ export default function List({
           ? {
               fishName: editFishName,
               fishWeight: editFishWeight,
-              fishLength: editFisLength,
+              fishLength: editFishLength,
               location: editFishLocation,
               lat: fish.lat,
               lng: fish.lng,
