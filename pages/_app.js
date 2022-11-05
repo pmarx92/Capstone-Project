@@ -17,30 +17,9 @@ function MyApp({ Component, pageProps, data }) {
   const [fetchedData, setFetchedData] = useState([]);
 
   async function fetchAPI() {
-    const request = await fetch("http://localhost:3000/api/formdata");
-    const data = await request.json();
-    console.log(data.data);
+    const res = await fetch("http://localhost:3000/api/formdata");
+    const data = await res.json();
     setFetchedData(data.data);
-    const array = [
-      {
-        name: "Patrick",
-        alter: 30,
-      },
-      {
-        name: "Celine",
-        alter: 24,
-      },
-    ];
-    console.log(
-      array[0].name +
-        " ist " +
-        array[0].alter +
-        " Jahre alt und " +
-        array[1].name +
-        " ist " +
-        array[1].alter +
-        " Jahre alt"
-    );
   }
 
   useEffect(() => {
