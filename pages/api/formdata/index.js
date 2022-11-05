@@ -14,6 +14,7 @@ export default async (req, res) => {
         res.status(200).json({ success: true, data: formData });
       } catch (error) {
         res.status(400).json({ success: false });
+        console.log(error);
       }
       break;
     case "POST":
@@ -23,6 +24,7 @@ export default async (req, res) => {
         res.status(201).json({ success: true, data: data });
       } catch (error) {
         res.status(400).json({ success: false });
+        console.log(error);
       }
       break;
     default:
