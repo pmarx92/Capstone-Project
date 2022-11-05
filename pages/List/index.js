@@ -86,7 +86,7 @@ export default function List({
                   step="0.10"
                   min="0.3"
                   max="10"
-                  value={setEditFishLength}
+                  value={editFishLength}
                   onChange={(e) => setEditFishLength(e.target.value)}
                   required
                 />
