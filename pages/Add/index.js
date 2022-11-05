@@ -6,7 +6,7 @@ import Map from "../../components/map/index";
 import Modal from "../../components/modal/index";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 
 export default function Add({
   fishList,
@@ -24,6 +24,23 @@ export default function Add({
 }) {
   const [opened, setOpened] = useState(false);
   const { pathname } = useRouter();
+
+  const sendToServer = async (newFish) => {
+    try {
+      const res = await fetch("/api/formdata", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newFish),
+      });
+      const data = await res.json();
+      console.log(data);
+      /* Router.push("/"); */
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,6 +60,7 @@ export default function Add({
     setFishWeight("");
     setFishLength("");
     setFishLocation("");
+    sendToServer(newFish);
   };
 
   return (
