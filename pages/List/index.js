@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
+import Link from "next/link";
+
 export default function List({
   fishList,
   setFishList,
@@ -39,13 +41,28 @@ export default function List({
     <div>
       <h1>This is the List Page - Under Construction</h1>
       {fetchedData.map((data) => {
-        console.log(data.name);
         return (
           <Card key={data._id}>
-            <h2>Name: {data.name}</h2>
+            <h2>
+              <Link href={`/${data._id}`}>
+                <a>Name: {data.name}</a>
+              </Link>
+            </h2>
             <h3>Weight: {data.weight}</h3>
             <h3>Length: {data.length}</h3>
             <h3>Location: {data.location}</h3>
+
+            <div>
+              <Link href={`/${data._id}`}>
+                <button>View</button>
+              </Link>
+              <Link href={`/${data._id}/edit`}>
+                <button>Edit</button>
+              </Link>
+              <Link href={`/${data._id}/delete`}>
+                <button>Delete</button>
+              </Link>
+            </div>
           </Card>
         );
       })}
