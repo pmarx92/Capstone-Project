@@ -59,9 +59,9 @@ export default function List({
                   minLength="3"
                   maxLength="15"
                   placeholder="z.B. Lachs"
-                  onChange={(e) => setEditFishName(e.target.value)}
+                  onInput={(e) => setEditFishName(e.target.value)}
                   pattern="^(?!^ +$)([\w -&]+)$"
-                  value={fish.fishName}
+                  defaultValue={fish.fishName}
                   required
                 />
                 <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -73,11 +73,11 @@ export default function List({
                   min=".50"
                   max="1.5"
                   placeholder="z.B. 0.70"
-                  value={fish.fishWeight}
-                  onChange={(e) => setEditFishWeight(e.target.value)}
+                  defaultValue={fish.fishWeight}
+                  onInput={(e) => setEditFishWeight(e.target.value)}
                   required
                 />
-                <StyledLabel htmlFor="length">Length in Meter: </StyledLabel>
+                <StyledLabel htmlFor="length">Length in cm: </StyledLabel>
                 <input
                   type="number"
                   id="length"
@@ -85,9 +85,9 @@ export default function List({
                   placeholder="z.B. 3"
                   step="0.10"
                   min="0.3"
-                  max="10"
-                  value={fish.fishLength}
-                  onChange={(e) => setEditFishLength(e.target.value)}
+                  max="200"
+                  defaultValue={fish.fishLength}
+                  onInput={(e) => setEditFishLength(e.target.value)}
                   required
                 />
                 <StyledLabel htmlFor="location">Location: </StyledLabel>
@@ -98,9 +98,9 @@ export default function List({
                   minLength="5"
                   maxLength="15"
                   placeholder="z.B. Kristiansand"
-                  onChange={(e) => setEditFishLocation(e.target.value)}
+                  onInput={(e) => setEditFishLocation(e.target.value)}
                   pattern="^(?!^ +$)([\w -&]+)$"
-                  value={fish.location}
+                  defaultValue={fish.location}
                   required
                 />
                 <DatePickerContainer>
