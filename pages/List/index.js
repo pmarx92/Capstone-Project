@@ -23,10 +23,10 @@ export default function List({
       fishList.map((fish) =>
         fish.id === id
           ? {
-              fishName: editFishName,
-              fishWeight: editFishWeight,
-              fishLength: editFishLength,
-              location: editFishLocation,
+              fishName: editFishName || fish.fishName,
+              fishWeight: editFishWeight || fish.fishWeight,
+              fishLength: editFishLength || fish.fishLength,
+              location: editFishLocation || fish.location,
               lat: fish.lat,
               lng: fish.lng,
               date: startDate.toISOString(),
@@ -59,9 +59,9 @@ export default function List({
                   minLength="3"
                   maxLength="15"
                   placeholder="z.B. Lachs"
-                  onInput={(e) => setEditFishName(e.target.value)}
+                  onChange={(e) => setEditFishName(e.target.value)}
                   pattern="^(?!^ +$)([\w -&]+)$"
-                  defaultValue={fish.fishName}
+                  defaultValue={[fish.fishName]}
                   required
                 />
                 <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -74,7 +74,7 @@ export default function List({
                   max="1.5"
                   placeholder="z.B. 0.70"
                   defaultValue={fish.fishWeight}
-                  onInput={(e) => setEditFishWeight(e.target.value)}
+                  onChange={(e) => setEditFishWeight(e.target.value)}
                   required
                 />
                 <StyledLabel htmlFor="length">Length in cm: </StyledLabel>
@@ -87,7 +87,7 @@ export default function List({
                   min="0.3"
                   max="200"
                   defaultValue={fish.fishLength}
-                  onInput={(e) => setEditFishLength(e.target.value)}
+                  onChange={(e) => setEditFishLength(e.target.value)}
                   required
                 />
                 <StyledLabel htmlFor="location">Location: </StyledLabel>
@@ -98,7 +98,7 @@ export default function List({
                   minLength="5"
                   maxLength="15"
                   placeholder="z.B. Kristiansand"
-                  onInput={(e) => setEditFishLocation(e.target.value)}
+                  onChange={(e) => setEditFishLocation(e.target.value)}
                   pattern="^(?!^ +$)([\w -&]+)$"
                   defaultValue={fish.location}
                   required
