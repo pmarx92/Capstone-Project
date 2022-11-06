@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps }) {
   const [fishWeight, setFishWeight] = useState();
   const [fishLength, setFishLength] = useState();
   const [fishLocation, setFishLocation] = useState("");
+  const [markerPosition, setMarkerPosition] = useState([]);
 
   const [fetchedData, setFetchedData] = useState([]);
   const [latlng, setLatLng] = useState([]);
@@ -47,6 +48,7 @@ function MyApp({ Component, pageProps }) {
           fetchedData={fetchedData}
           setLatLng={setLatLng}
           latlng={latlng}
+
         />
       </Layout>
     </>

@@ -24,6 +24,7 @@ export default function List({ fetchedData }) {
                 <Edit>Edit</Edit>
               </Link>
             </div>
+
           </Card>
         );
       })}

@@ -19,13 +19,15 @@ export default function Add({
   setFishLength,
   fishLocation,
   setFishLocation,
+
   setLatLng,
   latlng,
   fetchedData,
+
 }) {
   const [opened, setOpened] = useState(false);
   const { pathname } = useRouter();
-
+  
   const sendToServer = async () => {
     const res = await fetch("/api/formdata", {
       method: "POST",
@@ -50,6 +52,8 @@ export default function Add({
     setFishLength("");
     setFishLocation("");
     sendToServer();
+
+
   };
 
   return (
@@ -77,7 +81,7 @@ export default function Add({
             maxLength="15"
             placeholder="z.B. Lachs"
             onChange={(e) => setFishName(e.target.value)}
-            pattern="[^\s]+"
+            pattern="^(?!^ +$)([\w -&]+)$"
             required
           />
           <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -113,6 +117,7 @@ export default function Add({
             maxLength="15"
             placeholder="z.B. Kristiansand"
             onChange={(e) => setFishLocation(e.target.value)}
+            pattern="^(?!^ +$)([\w -&]+)$"
             required
           />
           <DatePickerContainer>
