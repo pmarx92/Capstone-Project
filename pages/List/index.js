@@ -44,9 +44,7 @@ export default function List({
         return (
           <Card key={data._id}>
             <h2>
-              <Link href={`/${data._id}`}>
-                <a>Name: {data.name}</a>
-              </Link>
+              <a>Name: {data.name}</a>
             </h2>
             <h3>Weight: {data.weight}</h3>
             <h3>Length: {data.length}</h3>
@@ -54,112 +52,19 @@ export default function List({
 
             <div>
               <Link href={`/${data._id}`}>
-                <button>View</button>
+                <View>View</View>
               </Link>
               <Link href={`/${data._id}/edit`}>
-                <button>Edit</button>
-              </Link>
-              <Link href={`/${data._id}/delete`}>
-                <button>Delete</button>
+                <Edit>Edit</Edit>
               </Link>
             </div>
           </Card>
         );
       })}
-      <Container>
-        {fishList.map((fish) => (
-          <Card key={fish.id}>
-            {storedId === fish.id ? (
-              <button onClick={() => editCard(fish.id)}>Submit Edit</button>
-            ) : (
-              <StyledBtn onClick={() => setStoredId(fish.id)}>Edit</StyledBtn>
-            )}
-            <StyledBtn onClick={() => deleteCard(fish.id)}>x</StyledBtn>
-            {storedId === fish.id ? (
-              <StyledField>
-                <StyledLabel htmlFor="name">Fish Name: </StyledLabel>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  minLength="3"
-                  maxLength="15"
-                  placeholder="z.B. Lachs"
-                  onChange={(e) => setEditFishName(e.target.value)}
-                  required
-                />
-                <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
-                <input
-                  type="number"
-                  id="weight"
-                  name="weight"
-                  step="0.10"
-                  min="0"
-                  max="25"
-                  placeholder="z.B. 12.0"
-                  onChange={(e) => setEditFishWeight(e.target.value)}
-                  required
-                />
-                <StyledLabel htmlFor="length">Length in Meter: </StyledLabel>
-                <input
-                  type="number"
-                  id="length"
-                  name="length"
-                  placeholder="z.B. 3"
-                  step="0.10"
-                  min="0"
-                  max="10"
-                  onChange={(e) => setEditFishLength(e.target.value)}
-                  required
-                />
-                <StyledLabel htmlFor="location">Location: </StyledLabel>
-                <input
-                  type="text"
-                  id="location"
-                  name="location"
-                  minLength="5"
-                  maxLength="15"
-                  placeholder="z.B. Kristiansand"
-                  onChange={(e) => setEditFishLocation(e.target.value)}
-                  required
-                />
-                <DatePickerContainer>
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={15}
-                    timeCaption="time"
-                    dateFormat="h:mm aa d MMMM, yyyy "
-                    withPortal
-                  />
-                </DatePickerContainer>
-              </StyledField>
-            ) : (
-              <div>
-                <StyledParagraph>Name: {fish.fishName}</StyledParagraph>
-                <StyledParagraph>Weight: {fish.fishWeight}kg</StyledParagraph>
-                <StyledParagraph>Length: {fish.fishLength}m</StyledParagraph>
-                <StyledParagraph>Location: {fish.location}</StyledParagraph>
-                <StyledParagraph>Date: {fish.date}</StyledParagraph>
-              </div>
-            )}
-          </Card>
-        ))}
-      </Container>
     </div>
   );
 }
 
-const StyledBtn = styled.button`
-  width: 20%;
-`;
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
 const Card = styled.div`
   display: flex;
   flex-direction: column;
@@ -171,28 +76,11 @@ const Card = styled.div`
     margin: 1.1rem;
   }
 `;
-const StyledParagraph = styled.p`
-  padding: 0.1rem;
+const Edit = styled.button`
+  padding: 0.5rem;
+  margin: 0.5rem;
 `;
-const DatePickerContainer = styled.div`
-  margin-top: 0.7rem;
-  width: 100%;
-`;
-const StyledLabel = styled.label`
-  margin: 0.7rem 0;
-`;
-const StyledForm = styled.form`
-  width: 80%;
-  margin: 0 auto;
-  padding: 1rem;
-`;
-const StyledField = styled.fieldset`
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-`;
-const StyledButton = styled.button`
-  display: flex;
-  margin: 1rem auto;
-  padding: 0.3rem;
+const View = styled.button`
+  padding: 0.5rem;
+  margin: 0.5rem;
 `;
