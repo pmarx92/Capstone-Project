@@ -21,6 +21,8 @@ export default function Add({
   setFishLength,
   fishLocation,
   setFishLocation,
+  markerPosition,
+  setMarkerPosition,
 }) {
   const [opened, setOpened] = useState(false);
   const { pathname } = useRouter();
@@ -28,26 +30,34 @@ export default function Add({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newFish = {
-      id: nanoid(),
-      fishName: fishName,
-      fishWeight: +fishWeight,
-      fishLength: +fishLength,
-      location: fishLocation,
-      date: startDate.toISOString(),
-    };
+    markerPosition.map((marker) => {
+      const newFishItem = {
+        id: nanoid(),
+        fishName: fishName,
+        fishWeight: +fishWeight,
+        fishLength: +fishLength,
+        location: fishLocation,
+        lat: marker.lat,
+        lng: marker.lng,
+        date: startDate.toISOString(),
+      };
 
-    setFishList([...fishList].concat(newFish));
-    setOpened(!opened);
-    setFishName("");
-    setFishWeight("");
-    setFishLength("");
-    setFishLocation("");
+      setFishList([...fishList].concat(newFishItem));
+      setOpened(!opened);
+      setFishName("");
+      setFishWeight("");
+      setFishLength("");
+      setFishLocation("");
+    });
   };
 
   return (
     <div>
-      <Map />
+      <Map
+        markerPosition={markerPosition}
+        setMarkerPosition={setMarkerPosition}
+        fishList={fishList}
+      />
       <StyledForm onSubmit={handleSubmit}>
         {opened ? (
           <Modal open={opened} close={() => setOpened(!opened)}>

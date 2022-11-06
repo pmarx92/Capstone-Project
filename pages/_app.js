@@ -11,6 +11,7 @@ function MyApp({ Component, pageProps }) {
   const [fishWeight, setFishWeight] = useState();
   const [fishLength, setFishLength] = useState();
   const [fishLocation, setFishLocation] = useState("");
+  const [markerPosition, setMarkerPosition] = useState([]);
 
   return (
     <>
@@ -30,6 +31,8 @@ function MyApp({ Component, pageProps }) {
           setFishLength={setFishLength}
           fishLocation={fishLocation}
           setFishLocation={setFishLocation}
+          markerPosition={markerPosition}
+          setMarkerPosition={setMarkerPosition}
         />
       </Layout>
     </>

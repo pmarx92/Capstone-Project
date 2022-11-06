@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
+
 export default function List({
   fishList,
   setFishList,
@@ -10,7 +11,7 @@ export default function List({
   const [storedId, setStoredId] = useState([]);
   const [editFishName, setEditFishName] = useState("");
   const [editFishWeight, setEditFishWeight] = useState("");
-  const [editFisLength, setEditFishLength] = useState("");
+  const [editFishLength, setEditFishLength] = useState("");
   const [editFishLocation, setEditFishLocation] = useState("");
 
   const deleteCard = (id) => {
@@ -22,16 +23,18 @@ export default function List({
       fishList.map((fish) =>
         fish.id === id
           ? {
-              id,
-              fishName: editFishName,
-              fishWeight: editFishWeight,
-              fishLength: editFisLength,
-              location: editFishLocation,
+              fishName: editFishName || fish.fishName,
+              fishWeight: editFishWeight || fish.fishWeight,
+              fishLength: editFishLength || fish.fishLength,
+              location: editFishLocation || fish.location,
+              lat: fish.lat,
+              lng: fish.lng,
               date: startDate.toISOString(),
             }
           : fish
       )
     );
+
     setStoredId([]);
   };
   return (
@@ -57,6 +60,8 @@ export default function List({
                   maxLength="15"
                   placeholder="z.B. Lachs"
                   onChange={(e) => setEditFishName(e.target.value)}
+                  pattern="^(?!^ +$)([\w -&]+)$"
+                  defaultValue={[fish.fishName]}
                   required
                 />
                 <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -65,21 +70,23 @@ export default function List({
                   id="weight"
                   name="weight"
                   step="0.10"
-                  min="0"
-                  max="25"
-                  placeholder="z.B. 12.0"
+                  min=".50"
+                  max="1.5"
+                  placeholder="z.B. 0.70"
+                  defaultValue={fish.fishWeight}
                   onChange={(e) => setEditFishWeight(e.target.value)}
                   required
                 />
-                <StyledLabel htmlFor="length">Length in Meter: </StyledLabel>
+                <StyledLabel htmlFor="length">Length in cm: </StyledLabel>
                 <input
                   type="number"
                   id="length"
                   name="length"
                   placeholder="z.B. 3"
                   step="0.10"
-                  min="0"
-                  max="10"
+                  min="0.3"
+                  max="200"
+                  defaultValue={fish.fishLength}
                   onChange={(e) => setEditFishLength(e.target.value)}
                   required
                 />
@@ -92,6 +99,8 @@ export default function List({
                   maxLength="15"
                   placeholder="z.B. Kristiansand"
                   onChange={(e) => setEditFishLocation(e.target.value)}
+                  pattern="^(?!^ +$)([\w -&]+)$"
+                  defaultValue={fish.location}
                   required
                 />
                 <DatePickerContainer>
@@ -111,7 +120,7 @@ export default function List({
               <div>
                 <StyledParagraph>Name: {fish.fishName}</StyledParagraph>
                 <StyledParagraph>Weight: {fish.fishWeight}kg</StyledParagraph>
-                <StyledParagraph>Length: {fish.fishLength}m</StyledParagraph>
+                <StyledParagraph>Length: {fish.fishLength}cm</StyledParagraph>
                 <StyledParagraph>Location: {fish.location}</StyledParagraph>
                 <StyledParagraph>Date: {fish.date}</StyledParagraph>
               </div>

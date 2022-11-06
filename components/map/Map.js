@@ -3,14 +3,12 @@ import { useMapEvents } from "react-leaflet/hooks";
 import { useState } from "react";
 import "leaflet/dist/leaflet.css";
 import { nanoid } from "nanoid";
-import useLocalStorage from "../hooks/LocalStorage";
 import { useEffect } from "react";
 
-export default function Map() {
+export default function Map({ markerPosition, setMarkerPosition, fishList }) {
   const [position, setPosition] = useState([
     58.034125450605316, 7.454502477686363,
   ]);
-  const [markerPosition, setMarkerPosition] = useLocalStorage("marker", []);
 
   function ClickHandler() {
     const map = useMapEvents({});
@@ -33,14 +31,14 @@ export default function Map() {
   function CreateMarker() {
     const map = useMapEvents({});
     useEffect(() => {
-      {
-        markerPosition.map((marker) => {
-          L.circle([marker.lat, marker.lng], { radius: 200 })
-            .addTo(map)
-            .bindPopup("I'm a Popup!")
-            .openPopup();
-        });
-      }
+      fishList.map((marker) => {
+        L.circle([marker.lat, marker.lng], { radius: 200 })
+          .addTo(map)
+          .bindPopup(
+            `Name: ${marker.fishName} <br> Weight: ${marker.fishWeight}kg <br> Length: ${marker.fishLength}cm`
+          )
+          .openPopup();
+      });
     }, []);
   }
   return (
