@@ -19,7 +19,6 @@ function MyApp({ Component, pageProps }) {
     const res = await fetch("http://localhost:3000/api/formdata");
     const data = await res.json();
     setFetchedData(data.data);
-    /*  console.log(data); */
   }
 
   useEffect(() => {
