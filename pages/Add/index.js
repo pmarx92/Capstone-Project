@@ -24,22 +24,27 @@ export default function Add({
 }) {
   const [opened, setOpened] = useState(false);
   const { pathname } = useRouter();
+  const [form, setForm] = useState({
+    name: "",
+    length: "",
+    weight: "",
+    length: "",
+    location: "",
+  });
 
-  const sendToServer = async (newFish) => {
-    try {
-      const res = await fetch("/api/formdata", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newFish),
-      });
-      const data = await res.json();
-      console.log(data);
-      /* Router.push("/"); */
-    } catch (error) {
-      console.log(error);
-    }
+  const sendToServer = async () => {
+    const res = await fetch("/api/formdata", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await res.json();
+  };
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
@@ -60,7 +65,7 @@ export default function Add({
     setFishWeight("");
     setFishLength("");
     setFishLocation("");
-    sendToServer(newFish);
+    sendToServer();
   };
 
   return (
@@ -87,9 +92,8 @@ export default function Add({
             minLength="3"
             maxLength="15"
             placeholder="z.B. Lachs"
-            onChange={(e) => setFishName(e.target.value)}
+            onChange={handleChange}
             pattern="[^\s]+"
-            value={fishName}
             required
           />
           <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -101,8 +105,7 @@ export default function Add({
             min=".50"
             max="1.5"
             placeholder="z.B. 0.70"
-            onChange={(e) => setFishWeight(e.target.value)}
-            value={fishWeight}
+            onChange={handleChange}
             required
           />
           <StyledLabel htmlFor="length">Length in cm: </StyledLabel>
@@ -114,8 +117,7 @@ export default function Add({
             step="0.10"
             min="0.3"
             max="10"
-            onChange={(e) => setFishLength(e.target.value)}
-            value={fishLength}
+            onChange={handleChange}
             required
           />
           <StyledLabel htmlFor="location">Location: </StyledLabel>
@@ -126,8 +128,7 @@ export default function Add({
             minLength="5"
             maxLength="15"
             placeholder="z.B. Kristiansand"
-            onChange={(e) => setFishLocation(e.target.value)}
-            value={fishLocation}
+            onChange={handleChange}
             required
           />
           <DatePickerContainer>
