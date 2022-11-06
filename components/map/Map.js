@@ -2,7 +2,6 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useMapEvents } from "react-leaflet/hooks";
 import { useState } from "react";
 import "leaflet/dist/leaflet.css";
-
 import { useEffect } from "react";
 
 export default function Map({ setLatLng, fetchedData }) {
@@ -35,6 +34,7 @@ export default function Map({ setLatLng, fetchedData }) {
           .openPopup();
       });
     }, [fetchedData]);
+
   }
 
   return (
