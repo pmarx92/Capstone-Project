@@ -4,9 +4,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import useLocalStorage from "../components/hooks/LocalStorage";
 import { useState } from "react";
 import { useEffect } from "react";
-/* import data from "../components/DataFetching"; */
 
-function MyApp({ Component, pageProps, data }) {
+function MyApp({ Component, pageProps }) {
   const [startDate, setStartDate] = useState(new Date());
   const [fishList, setFishList] = useLocalStorage("fishList", []);
   const [fishName, setFishName] = useState("");
@@ -20,6 +19,7 @@ function MyApp({ Component, pageProps, data }) {
     const res = await fetch("http://localhost:3000/api/formdata");
     const data = await res.json();
     setFetchedData(data.data);
+    /*  console.log(data); */
   }
 
   useEffect(() => {
