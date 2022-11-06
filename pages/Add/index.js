@@ -40,7 +40,6 @@ export default function Add({
       },
       body: JSON.stringify(form),
     });
-    const data = await res.json();
   };
 
   const handleChange = (e) => {
