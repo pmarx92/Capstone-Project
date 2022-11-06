@@ -4,7 +4,7 @@ const CardsSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Add a Name"],
-    unique: true,
+    unique: false,
     trim: true,
     maxlength: [15, "The name cannot be more than 15 characters!"],
   },
@@ -25,6 +25,9 @@ const CardsSchema = new mongoose.Schema({
   },
   date: {
     type: String,
+  },
+  coords: {
+    type: [Number],
   },
 });
 

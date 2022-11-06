@@ -14,6 +14,7 @@ function MyApp({ Component, pageProps }) {
   const [fishLocation, setFishLocation] = useState("");
 
   const [fetchedData, setFetchedData] = useState([]);
+  const [latlng, setLatLng] = useState([]);
 
   async function fetchAPI() {
     const res = await fetch("http://localhost:3000/api/formdata");
@@ -44,6 +45,8 @@ function MyApp({ Component, pageProps }) {
           fishLocation={fishLocation}
           setFishLocation={setFishLocation}
           fetchedData={fetchedData}
+          setLatLng={setLatLng}
+          latlng={latlng}
         />
       </Layout>
     </>

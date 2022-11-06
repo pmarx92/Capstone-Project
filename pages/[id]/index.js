@@ -2,6 +2,15 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
+export async function getServerSideProps(ctx) {
+  const res = await fetch(`http://localhost:3000/api/formdata/${ctx.query.id}`);
+  const data = await res.json();
+
+  return {
+    props: { data },
+  };
+}
+
 export default function Card({ data }) {
   const router = useRouter();
   console.log(data.data);
@@ -27,15 +36,6 @@ export default function Card({ data }) {
       </Container>
     </div>
   );
-}
-
-export async function getServerSideProps(ctx) {
-  const res = await fetch(`http://localhost:3000/api/formdata/${ctx.query.id}`);
-  const data = await res.json();
-
-  return {
-    props: { data },
-  };
 }
 
 const Container = styled.div`

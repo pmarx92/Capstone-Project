@@ -10,26 +10,22 @@ import { useRouter } from "next/router";
 
 export default function EditCard({
   startDate,
+  fishName,
   setStartDate,
+  fishWeight,
   setFishName,
+  fishLength,
   setFishWeight,
   setFishLength,
+  fishLocation,
   setFishLocation,
-  data,
+  setLatLng,
+  latlng,
+  fetchedData,
 }) {
   const [opened, setOpened] = useState(false);
   const { pathname } = useRouter();
-  const [form, setForm] = useState({
-    name: data.data.name,
-    weight: data.data.weight,
-    length: data.data.length,
-    location: data.data.location,
-  });
   const router = useRouter();
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
   const sendToServer = async () => {
     const res = await fetch(`/api/formdata/${router.query.id}`, {
@@ -37,13 +33,18 @@ export default function EditCard({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify({
+        name: fishName,
+        weight: fishWeight,
+        length: fishLength,
+        location: fishLocation,
+        date: startDate.toISOString(),
+        coords: latlng,
+      }),
     });
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-
     setOpened(!opened);
     setFishName("");
     setFishWeight("");
@@ -54,7 +55,7 @@ export default function EditCard({
 
   return (
     <div>
-      <Map />
+      <Map setLatLng={setLatLng} latlng={latlng} fetchedData={fetchedData} />
       <StyledForm onSubmit={handleSubmit}>
         {opened ? (
           <Modal open={opened} close={() => setOpened(!opened)}>
@@ -76,9 +77,8 @@ export default function EditCard({
             minLength="3"
             maxLength="15"
             placeholder="z.B. Lachs"
-            onChange={handleChange}
+            onChange={(e) => setFishName(e.target.value)}
             pattern="[^\s]+"
-            value={form.name}
             required
           />
           <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -90,8 +90,7 @@ export default function EditCard({
             min=".50"
             max="1.5"
             placeholder="z.B. 0.70"
-            onChange={handleChange}
-            value={form.weight}
+            oonChange={(e) => setFishWeight(e.target.value)}
             required
           />
           <StyledLabel htmlFor="length">Length in cm: </StyledLabel>
@@ -103,8 +102,7 @@ export default function EditCard({
             step="0.10"
             min="0.3"
             max="10"
-            onChange={handleChange}
-            value={form.length}
+            onChange={(e) => setFishLength(e.target.value)}
             required
           />
           <StyledLabel htmlFor="location">Location: </StyledLabel>
@@ -115,8 +113,7 @@ export default function EditCard({
             minLength="5"
             maxLength="15"
             placeholder="z.B. Kristiansand"
-            onChange={handleChange}
-            value={form.location}
+            onChange={(e) => setFishLocation(e.target.value)}
             required
           />
           <DatePickerContainer>

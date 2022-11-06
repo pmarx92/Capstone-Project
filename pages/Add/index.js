@@ -6,11 +6,9 @@ import Map from "../../components/map/index";
 import Modal from "../../components/modal/index";
 import { useState } from "react";
 import Link from "next/link";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 export default function Add({
-  fishList,
-  setFishList,
   startDate,
   setStartDate,
   fishName,
@@ -21,16 +19,12 @@ export default function Add({
   setFishLength,
   fishLocation,
   setFishLocation,
+  setLatLng,
+  latlng,
+  fetchedData,
 }) {
   const [opened, setOpened] = useState(false);
   const { pathname } = useRouter();
-  const [form, setForm] = useState({
-    name: "",
-    length: "",
-    weight: "",
-    length: "",
-    location: "",
-  });
 
   const sendToServer = async () => {
     const res = await fetch("/api/formdata", {
@@ -38,27 +32,18 @@ export default function Add({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(form),
+      body: JSON.stringify({
+        name: fishName,
+        weight: fishWeight,
+        length: fishLength,
+        location: fishLocation,
+        date: startDate.toISOString(),
+        coords: latlng,
+      }),
     });
   };
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const newFish = {
-      id: nanoid(),
-      fishName: fishName,
-      fishWeight: +fishWeight,
-      fishLength: +fishLength,
-      location: fishLocation,
-      date: startDate.toISOString(),
-    };
-
-    setFishList([...fishList].concat(newFish));
+  const handleSubmit = () => {
     setOpened(!opened);
     setFishName("");
     setFishWeight("");
@@ -69,7 +54,7 @@ export default function Add({
 
   return (
     <div>
-      <Map />
+      <Map setLatLng={setLatLng} latlng={latlng} fetchedData={fetchedData} />
       <StyledForm onSubmit={handleSubmit}>
         {opened ? (
           <Modal open={opened} close={() => setOpened(!opened)}>
@@ -91,7 +76,7 @@ export default function Add({
             minLength="3"
             maxLength="15"
             placeholder="z.B. Lachs"
-            onChange={handleChange}
+            onChange={(e) => setFishName(e.target.value)}
             pattern="[^\s]+"
             required
           />
@@ -104,7 +89,7 @@ export default function Add({
             min=".50"
             max="1.5"
             placeholder="z.B. 0.70"
-            onChange={handleChange}
+            onChange={(e) => setFishWeight(e.target.value)}
             required
           />
           <StyledLabel htmlFor="length">Length in cm: </StyledLabel>
@@ -112,11 +97,11 @@ export default function Add({
             type="number"
             id="length"
             name="length"
-            placeholder="z.B. 3"
-            step="0.10"
-            min="0.3"
-            max="10"
-            onChange={handleChange}
+            placeholder="z.B. 10"
+            step="10"
+            min="10"
+            max="200"
+            onChange={(e) => setFishLength(e.target.value)}
             required
           />
           <StyledLabel htmlFor="location">Location: </StyledLabel>
@@ -127,7 +112,7 @@ export default function Add({
             minLength="5"
             maxLength="15"
             placeholder="z.B. Kristiansand"
-            onChange={handleChange}
+            onChange={(e) => setFishLocation(e.target.value)}
             required
           />
           <DatePickerContainer>
