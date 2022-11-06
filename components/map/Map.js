@@ -2,30 +2,23 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useMapEvents } from "react-leaflet/hooks";
 import { useState } from "react";
 import "leaflet/dist/leaflet.css";
-import { nanoid } from "nanoid";
-import useLocalStorage from "../hooks/LocalStorage";
+
 import { useEffect } from "react";
 
-export default function Map() {
+export default function Map({ setLatLng, fetchedData }) {
   const [position, setPosition] = useState([
     58.034125450605316, 7.454502477686363,
   ]);
-  const [markerPosition, setMarkerPosition] = useLocalStorage("marker", []);
 
   function ClickHandler() {
     const map = useMapEvents({});
     map.on("click", function (e) {
-      const newMarker = {
-        id: nanoid(),
-        lat: e.latlng.lat,
-        lng: e.latlng.lng,
-      };
+      setLatLng([e.latlng.lat, e.latlng.lng]);
 
       L.circle([e.latlng.lat, e.latlng.lng], { radius: 200 })
         .addTo(map)
         .bindPopup("I'm a Popup!")
         .openPopup();
-      setMarkerPosition([...markerPosition].concat(newMarker));
     });
     return null;
   }
@@ -33,16 +26,17 @@ export default function Map() {
   function CreateMarker() {
     const map = useMapEvents({});
     useEffect(() => {
-      {
-        markerPosition.map((marker) => {
-          L.circle([marker.lat, marker.lng], { radius: 200 })
-            .addTo(map)
-            .bindPopup("I'm a Popup!")
-            .openPopup();
-        });
-      }
-    }, []);
+      fetchedData.map((marker) => {
+        L.circle([marker.coords[0], marker.coords[1]], { radius: 200 })
+          .addTo(map)
+          .bindPopup(
+            `Name: ${marker.name} <br> Weight: ${marker.weight}kg <br> Length: ${marker.length}cm`
+          )
+          .openPopup();
+      });
+    }, [fetchedData]);
   }
+
   return (
     <>
       <MapContainer
