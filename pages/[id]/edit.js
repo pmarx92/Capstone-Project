@@ -9,17 +9,11 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function EditCard({
-  fishList,
-  setFishList,
   startDate,
   setStartDate,
-  fishName,
   setFishName,
-  fishWeight,
   setFishWeight,
-  fishLength,
   setFishLength,
-  fishLocation,
   setFishLocation,
   data,
 }) {
@@ -33,6 +27,10 @@ export default function EditCard({
   });
   const router = useRouter();
 
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
   const sendToServer = async () => {
     const res = await fetch(`/api/formdata/${router.query.id}`, {
       method: "PUT",
@@ -43,23 +41,9 @@ export default function EditCard({
     });
   };
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newFish = {
-      id: nanoid(),
-      fishName: fishName,
-      fishWeight: +fishWeight,
-      fishLength: +fishLength,
-      location: fishLocation,
-      date: startDate.toISOString(),
-    };
-
-    setFishList([...fishList].concat(newFish));
     setOpened(!opened);
     setFishName("");
     setFishWeight("");
