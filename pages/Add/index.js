@@ -23,11 +23,10 @@ export default function Add({
   setLatLng,
   latlng,
   fetchedData,
-
 }) {
   const [opened, setOpened] = useState(false);
   const { pathname } = useRouter();
-  
+
   const sendToServer = async () => {
     const res = await fetch("/api/formdata", {
       method: "POST",
@@ -52,8 +51,6 @@ export default function Add({
     setFishLength("");
     setFishLocation("");
     sendToServer();
-
-
   };
 
   return (
@@ -91,7 +88,7 @@ export default function Add({
             name="weight"
             step="0.10"
             min=".50"
-            max="1.5"
+            max="25"
             placeholder="z.B. 0.70"
             onChange={(e) => setFishWeight(e.target.value)}
             required
@@ -113,7 +110,7 @@ export default function Add({
             type="text"
             id="location"
             name="location"
-            minLength="5"
+            minLength="3"
             maxLength="15"
             placeholder="z.B. Kristiansand"
             onChange={(e) => setFishLocation(e.target.value)}

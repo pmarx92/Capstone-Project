@@ -78,7 +78,7 @@ export default function EditCard({
             maxLength="15"
             placeholder="z.B. Lachs"
             onChange={(e) => setFishName(e.target.value)}
-            pattern="[^\s]+"
+            pattern="^(?!^ +$)([\w -&]+)$"
             required
           />
           <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -88,7 +88,7 @@ export default function EditCard({
             name="weight"
             step="0.10"
             min=".50"
-            max="1.5"
+            max="25"
             placeholder="z.B. 0.70"
             oonChange={(e) => setFishWeight(e.target.value)}
             required
@@ -98,10 +98,10 @@ export default function EditCard({
             type="number"
             id="length"
             name="length"
-            placeholder="z.B. 3"
-            step="0.10"
-            min="0.3"
-            max="10"
+            placeholder="z.B. 10"
+            step="10"
+            min="10"
+            max="200"
             onChange={(e) => setFishLength(e.target.value)}
             required
           />
@@ -110,10 +110,11 @@ export default function EditCard({
             type="text"
             id="location"
             name="location"
-            minLength="5"
+            minLength="3"
             maxLength="15"
             placeholder="z.B. Kristiansand"
             onChange={(e) => setFishLocation(e.target.value)}
+            pattern="^(?!^ +$)([\w -&]+)$"
             required
           />
           <DatePickerContainer>
