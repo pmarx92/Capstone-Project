@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import apiUrl from "next-api-url";
 
 export async function getServerSideProps(ctx) {
-  const res = await fetch(`/api/formdata/${ctx.query.id}`);
+  const res = await fetch(`${apiUrl(ctx)}/formdata/${ctx.query.id}`);
   const data = await res.json();
 
   return {
@@ -15,9 +16,12 @@ export default function Card({ data }) {
   const router = useRouter();
 
   const deleteCard = async () => {
-    const deleted = await fetch(`/api/formdata/${router.query.id}`, {
-      method: "Delete",
-    });
+    const deleted = await fetch(
+      `http://localhost:3000/api/formdata/${router.query.id}`,
+      {
+        method: "Delete",
+      }
+    );
     router.push("/List");
   };
 
