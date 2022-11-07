@@ -24,17 +24,17 @@ export default function Map({ setLatLng, fetchedData }) {
 
   function CreateMarker() {
     const map = useMapEvents({});
+
     useEffect(() => {
-      fetchedData.map((marker) => {
-        L.circle([marker.coords[0], marker.coords[1]], { radius: 200 })
+      fetchedData.forEach((element) => {
+        L.circle([element.coords[0], element.coords[1]], { radius: 200 })
           .addTo(map)
           .bindPopup(
-            `Name: ${marker.name} <br> Weight: ${marker.weight}kg <br> Length: ${marker.length}cm`
+            `Name: ${element.name} <br> Weight: ${element.weight}kg <br> Length: ${element.length}cm`
           )
           .openPopup();
       });
     }, [fetchedData]);
-
   }
 
   return (
