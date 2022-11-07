@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { nanoid } from "nanoid";
 import Map from "../../components/map/index";
 import Modal from "../../components/modal/index";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import apiUrl from "next-api-url";
 
 export default function EditCard({
   startDate,
@@ -137,7 +137,7 @@ export default function EditCard({
 }
 
 export async function getServerSideProps(ctx) {
-  const res = await fetch(`http://localhost:3000/api/formdata/${ctx.query.id}`);
+  const res = await fetch(`${apiUrl(ctx)}/formdata/${ctx.query.id}`);
   const data = await res.json();
 
   return {

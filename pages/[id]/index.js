@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import apiUrl from "next-api-url";
@@ -16,12 +15,9 @@ export default function Card({ data }) {
   const router = useRouter();
 
   const deleteCard = async () => {
-    const deleted = await fetch(
-      `http://localhost:3000/api/formdata/${router.query.id}`,
-      {
-        method: "Delete",
-      }
-    );
+    const deleted = await fetch(`/api/formdata/${router.query.id}`, {
+      method: "Delete",
+    });
     router.push("/List");
   };
 
