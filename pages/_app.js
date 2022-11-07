@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }) {
   const [latlng, setLatLng] = useState([]);
 
   async function fetchAPI() {
-    const res = await fetch("http://localhost:3000/api/formdata");
+    const res = await fetch("/api/formdata");
     const data = await res.json();
     setFetchedData(data.data);
   }
@@ -48,7 +48,6 @@ function MyApp({ Component, pageProps }) {
           fetchedData={fetchedData}
           setLatLng={setLatLng}
           latlng={latlng}
-
         />
       </Layout>
     </>

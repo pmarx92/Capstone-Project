@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 
 export async function getServerSideProps(ctx) {
-  const res = await fetch(`http://localhost:3000/api/formdata/${ctx.query.id}`);
+  const res = await fetch(`/api/formdata/${ctx.query.id}`);
   const data = await res.json();
 
   return {
@@ -13,15 +13,11 @@ export async function getServerSideProps(ctx) {
 
 export default function Card({ data }) {
   const router = useRouter();
-  console.log(data.data);
 
   const deleteCard = async () => {
-    const deleted = await fetch(
-      `http://localhost:3000/api/formdata/${router.query.id}`,
-      {
-        method: "Delete",
-      }
-    );
+    const deleted = await fetch(`/api/formdata/${router.query.id}`, {
+      method: "Delete",
+    });
     router.push("/List");
   };
 

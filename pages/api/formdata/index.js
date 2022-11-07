@@ -1,9 +1,8 @@
 import dbConnect from "../../../utils/dbConnect";
 import Cards from "../../../models/Cards";
 
-dbConnect();
-
 export default async (req, res) => {
+  dbConnect();
   const { method } = req;
 
   switch (method) {
