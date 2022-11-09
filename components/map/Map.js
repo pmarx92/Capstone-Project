@@ -93,6 +93,7 @@ export default function Map({ latlng, setLatLng }) {
   }
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     setOpened(!opened);
     setFishName("");
     setFishWeight("");
@@ -123,7 +124,7 @@ export default function Map({ latlng, setLatLng }) {
         ></TileLayer>
         {opened ? (
           <FormModal open={opened} close={() => setOpened(!opened)}>
-            <StyledForm onSubmit={(e) => handleSubmit(e)}>
+            <StyledForm onSubmit={handleSubmit}>
               <StyledField>
                 <StyledLabel htmlFor="name">Fish Name: </StyledLabel>
                 <input
@@ -186,7 +187,7 @@ export default function Map({ latlng, setLatLng }) {
                 </DatePickerContainer>
               </StyledField>
 
-              <StyledButton type="button">Submit</StyledButton>
+              <StyledButton type="submit">Submit</StyledButton>
             </StyledForm>
           </FormModal>
         ) : null}
