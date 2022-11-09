@@ -2,9 +2,8 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import { useMapEvents } from "react-leaflet/hooks";
 import { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
-import FormModal from "../formModal";
 import styled from "styled-components";
-
+import EditFormModal from "../../editFormModal/index";
 import { useRouter } from "next/router";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -14,26 +13,26 @@ export default function Map({ latlng, setLatLng }) {
     58.034125450605316, 7.454502477686363,
   ]);
   const [opened, setOpened] = useState(false);
-  const { pathname } = useRouter();
+
   const [startDate, setStartDate] = useState(new Date());
-
-  const [fishName, setFishName] = useState("");
-  const [fishWeight, setFishWeight] = useState();
-  const [fishLength, setFishLength] = useState();
-  const [fishLocation, setFishLocation] = useState("");
-
+  const [editfishName, setEditFishName] = useState("");
+  const [editfishWeight, setEditFishWeight] = useState();
+  const [editfishLength, setEditFishLength] = useState();
+  const [editfishLocation, setEditFishLocation] = useState("");
   const [APIData, setAPIData] = useState([]);
-  const [APICoords, setAPICoords] = useState([]);
+  const router = useRouter();
 
   async function fetchAPI() {
     const res = await fetch("/api/formdata");
     const data = await res.json();
-    const allData = data.data;
-    setAPIData(allData);
+    const fetchedAPIData = data.data;
+    setAPIData(fetchedAPIData);
 
-    allData.map((data) => {
-      setAPICoords(data.coords);
-    });
+    setLatLng(
+      fetchedAPIData.map((data) => {
+        data.coords;
+      })
+    );
   }
 
   useEffect(() => {
@@ -41,18 +40,18 @@ export default function Map({ latlng, setLatLng }) {
   }, []);
 
   const sendToServer = async () => {
-    const res = await fetch("/api/formdata", {
-      method: "POST",
+    const res = await fetch(`/api/formdata/${router.query.id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: fishName,
-        weight: fishWeight,
-        length: fishLength,
-        location: fishLocation,
+        name: editfishName || APIData.name,
+        weight: editfishWeight || APIData.weight,
+        length: editfishLength || APIData.length,
+        location: editfishLocation || APIData.location,
         date: startDate.toISOString(),
-        coords: latlng,
+        coords: latlng || APIData.coords,
       }),
     });
   };
@@ -79,7 +78,6 @@ export default function Map({ latlng, setLatLng }) {
 
   function CreateMarker() {
     const map = useMapEvents({});
-
     useEffect(() => {
       APIData.forEach((element) => {
         L.circle([element.coords[0], element.coords[1]], { radius: 200 })
@@ -94,10 +92,10 @@ export default function Map({ latlng, setLatLng }) {
 
   const handleSubmit = () => {
     setOpened(!opened);
-    setFishName("");
-    setFishWeight("");
-    setFishLength("");
-    setFishLocation("");
+    setEditFishName("");
+    setEditFishWeight("");
+    setEditFishLength("");
+    setEditFishLocation("");
     sendToServer();
   };
 
@@ -122,7 +120,7 @@ export default function Map({ latlng, setLatLng }) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         ></TileLayer>
         {opened ? (
-          <FormModal open={opened} close={() => setOpened(!opened)}>
+          <EditFormModal open={opened} close={() => setOpened(!opened)}>
             <StyledForm onSubmit={handleSubmit}>
               <StyledField>
                 <StyledLabel htmlFor="name">Fish Name: </StyledLabel>
@@ -133,8 +131,9 @@ export default function Map({ latlng, setLatLng }) {
                   minLength="3"
                   maxLength="15"
                   placeholder="z.B. Lachs"
-                  onChange={(e) => setFishName(e.target.value)}
+                  onChange={(e) => setEditFishName(e.target.value)}
                   pattern="^(?!^ +$)([\w -&]+)$"
+                  defaultValue={APIData.name}
                   required
                 />
                 <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -146,7 +145,8 @@ export default function Map({ latlng, setLatLng }) {
                   min=".50"
                   max="25"
                   placeholder="z.B. 0.70"
-                  onChange={(e) => setFishWeight(e.target.value)}
+                  onChange={(e) => setEditFishWeight(e.target.value)}
+                  defaultValue={APIData.weight}
                   required
                 />
                 <StyledLabel htmlFor="length">Length in cm: </StyledLabel>
@@ -158,7 +158,8 @@ export default function Map({ latlng, setLatLng }) {
                   step="10"
                   min="10"
                   max="200"
-                  onChange={(e) => setFishLength(e.target.value)}
+                  onChange={(e) => setEditFishLength(e.target.value)}
+                  defaultValue={APIData.length}
                   required
                 />
                 <StyledLabel htmlFor="location">Location: </StyledLabel>
@@ -169,8 +170,9 @@ export default function Map({ latlng, setLatLng }) {
                   minLength="3"
                   maxLength="15"
                   placeholder="z.B. Kristiansand"
-                  onChange={(e) => setFishLocation(e.target.value)}
+                  onChange={(e) => setEditFishLocation(e.target.value)}
                   pattern="^(?!^ +$)([\w -&]+)$"
+                  defaultValue={APIData.location}
                   required
                 />
                 <DatePickerContainer>
@@ -182,13 +184,13 @@ export default function Map({ latlng, setLatLng }) {
                     timeIntervals={15}
                     timeCaption="time"
                     dateFormat="h:mm aa d MMMM, yyyy "
+                    withPortal
                   />
                 </DatePickerContainer>
               </StyledField>
-
-              <StyledButton type="submit">Submit</StyledButton>
+              <StyledButton type="submit">Update</StyledButton>
             </StyledForm>
-          </FormModal>
+          </EditFormModal>
         ) : null}
 
         <CreateMarker />

@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-export default function List({ fetchedData }) {
+export default function List({ dataFromAPI }) {
   return (
     <div>
       <h1>This is the List Page - Under Construction</h1>
-      {fetchedData.map((data) => {
+      {dataFromAPI.map((data) => {
         return (
           <Card key={data._id}>
             <h2>
@@ -24,7 +24,6 @@ export default function List({ fetchedData }) {
                 <Edit>Edit</Edit>
               </Link>
             </div>
-
           </Card>
         );
       })}
