@@ -186,7 +186,7 @@ export default function Map({ latlng, setLatLng }) {
                 </DatePickerContainer>
               </StyledField>
 
-              <StyledButton type="submit">Submit</StyledButton>
+              <StyledButton type="button">Submit</StyledButton>
             </StyledForm>
           </FormModal>
         ) : null}
