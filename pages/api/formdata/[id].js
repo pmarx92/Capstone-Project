@@ -13,9 +13,12 @@ export default async (req, res) => {
     case "GET":
       try {
         const formdata = await Cards.findById(id);
-        !Cards
-          ? res.status(400).json({ success: false })
-          : res.status(200).json({ success: true, data: formdata });
+
+        if (!Cards) {
+          res.status(400).json({ success: false });
+        } else {
+          res.status(200).json({ success: true, data: formdata });
+        }
       } catch (error) {
         res.status(400).json({ success: false });
       }
@@ -28,9 +31,11 @@ export default async (req, res) => {
           runValidators: true,
         });
 
-        !Cards
-          ? res.status(400).json({ success: false })
-          : res.status(200).json({ success: true, data: formdata });
+        if (!Cards) {
+          res.status(400).json({ success: false });
+        } else {
+          res.status(200).json({ success: true, data: formdata });
+        }
       } catch (error) {
         res.status(400).json({ success: false });
       }
@@ -39,9 +44,12 @@ export default async (req, res) => {
     case "DELETE":
       try {
         const deleteData = await Cards.deleteOne({ _id: id });
-        !deleteData
-          ? res.status(400).json({ success: false })
-          : res.status(200).json({ success: true, data: {} });
+
+        if (!deleteData) {
+          res.status(400).json({ success: false });
+        } else {
+          res.status(200).json({ success: true, data: deleteData });
+        }
       } catch (error) {
         res.status(400).json({ success: false });
       }
