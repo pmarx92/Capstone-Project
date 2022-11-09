@@ -92,7 +92,7 @@ export default function Map({ latlng, setLatLng }) {
     }, []);
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
     setOpened(!opened);
     setFishName("");
     setFishWeight("");
@@ -123,7 +123,7 @@ export default function Map({ latlng, setLatLng }) {
         ></TileLayer>
         {opened ? (
           <FormModal open={opened} close={() => setOpened(!opened)}>
-            <StyledForm onSubmit={handleSubmit}>
+            <StyledForm onSubmit={(e) => handleSubmit(e)}>
               <StyledField>
                 <StyledLabel htmlFor="name">Fish Name: </StyledLabel>
                 <input
