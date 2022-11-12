@@ -11,7 +11,6 @@ export async function search() {
       },
     }
   ).then((r) => r.json());
-  console.log(results);
   return results;
 }
 

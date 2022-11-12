@@ -1,13 +1,11 @@
 import styled from "styled-components";
 import { search, mapImages } from "../../components/lib/cloudinary";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const results = await search();
 
   const { resources } = results;
   const images = mapImages(resources);
-
-  console.log("images inside getStatic: ", images);
 
   return {
     props: { images },
