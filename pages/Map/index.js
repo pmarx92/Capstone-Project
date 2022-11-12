@@ -1,31 +1,38 @@
 import styled from "styled-components";
-import { cloudinary } from "../../components/lib/cloudinary";
+import { search, mapImages } from "../../components/lib/cloudinary";
+import { useState, useEffect } from "react";
 
-export default function Map({ images }) {
+export default function Map() {
+  const [imageSrc, setImageSrc] = useState([]);
+
+  async function run() {
+    const results = await fetch("/api/search").then((r) => r.json());
+    const allData = results.resources;
+    setImageSrc(allData);
+  }
+
+  useEffect(() => {
+    run();
+  }, []);
+
   return (
     <div>
       <h1>This is the Map Page - Under Construction</h1>
-      {images?.map((image) => {
-        return <StyledImage key={image.id} src={image.image} />;
+      {imageSrc.map((data) => {
+        return <StyledImage key={data.asset_id} src={data.secure_url} />;
       })}
     </div>
   );
 }
-export async function getStaticProps() {
-  const results = await cloudinary();
+/* export async function getStaticProps() {
+  const results = await search();
 
-  const { resources } = results;
-  const images = resources.map((resource) => {
-    return {
-      id: resource.asset_id,
-      title: resource.public_id,
-      image: resource.secure_url,
-    };
-  });
+  const { resources, next_cursor: nextCursor } = results;
+  const images = mapImages(resources);
   return {
-    props: { images },
+    props: { images, nextCursor },
   };
-}
+} */
 const StyledImage = styled.img`
   width: 15%;
   height: 15%;
