@@ -1,25 +1,9 @@
 import styled from "styled-components";
-import { search, mapImages } from "../../components/lib/cloudinary";
 
-export async function getServerSideProps() {
-  const results = await search();
-
-  const { resources } = results;
-  const images = mapImages(resources);
-
-  return {
-    props: { images },
-  };
-}
-
-export default function Map({ images }) {
+export default function Map() {
   return (
     <div>
       <h1>This is the Map Page - Under Construction</h1>
-      {images.map((data) => {
-        console.log("images map: ", data);
-        return <StyledImage key={data.asset_id} src={data.image} />;
-      })}
     </div>
   );
 }
