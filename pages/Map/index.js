@@ -5,14 +5,14 @@ import { useState, useEffect } from "react";
 export default function Map() {
   const [imageSrc, setImageSrc] = useState([]);
 
-  async function run() {
+  async function imageFetch() {
     const results = await fetch("/api/search").then((r) => r.json());
     const allData = results.resources;
     setImageSrc(allData);
   }
 
   useEffect(() => {
-    run();
+    imageFetch();
   }, []);
 
   return (
