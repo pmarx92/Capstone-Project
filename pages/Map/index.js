@@ -1,25 +1,26 @@
 import styled from "styled-components";
 import { search, mapImages } from "../../components/lib/cloudinary";
-import { useState, useEffect } from "react";
 
-export default function Map() {
-  const [imageSrc, setImageSrc] = useState([]);
+export async function getStaticProps() {
+  const results = await search();
 
-  async function imageFetch() {
-    const results = await fetch("/api/search").then((r) => r.json());
-    const allData = results.resources;
-    setImageSrc(allData);
-  }
+  const { resources } = results;
+  const images = mapImages(resources);
 
-  useEffect(() => {
-    imageFetch();
-  }, []);
+  console.log("images inside getStatic: ", images);
 
+  return {
+    props: { images },
+  };
+}
+
+export default function Map({ images }) {
   return (
     <div>
       <h1>This is the Map Page - Under Construction</h1>
-      {imageSrc.map((data) => {
-        return <StyledImage key={data.asset_id} src={data.secure_url} />;
+      {images.map((data) => {
+        console.log("images map: ", data);
+        return <StyledImage key={data.asset_id} src={data.image} />;
       })}
     </div>
   );
