@@ -31,7 +31,7 @@ export default function Map({ images }) {
   return (
     <div>
       <h1>This is the Map Page - Under Construction</h1>
-      {images.map((image) => {
+      {images?.map((image) => {
         return <StyledImage key={image.id} src={image.image} />;
       })}
     </div>
