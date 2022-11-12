@@ -25,6 +25,9 @@ export default function Map({ latlng, setLatLng }) {
   const [APIData, setAPIData] = useState([]);
   const [APICoords, setAPICoords] = useState([]);
 
+  const [imageSrc, setImageSrc] = useState();
+  const [uploadData, setUploadData] = useState();
+
   async function fetchAPI() {
     const res = await fetch("/api/formdata");
     const data = await res.json();
@@ -53,6 +56,7 @@ export default function Map({ latlng, setLatLng }) {
         location: fishLocation,
         date: startDate.toISOString(),
         coords: latlng,
+        cloudinarySrc: imageSrc,
       }),
     });
   };
@@ -92,14 +96,46 @@ export default function Map({ latlng, setLatLng }) {
     }, []);
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const submitForm = () => {
     setOpened(!opened);
     setFishName("");
     setFishWeight("");
     setFishLength("");
     setFishLocation("");
     sendToServer();
+  };
+
+  const handleSubmit = async (e) => {
+    const form = e.currentTarget;
+    const fileInput = Array.from(form.elements).find(
+      ({ name }) => name === "file"
+    );
+
+    const formData = new FormData();
+    for (const file of fileInput.files) {
+      formData.append("file", file);
+    }
+
+    formData.append("upload_preset", "testUploads");
+
+    const data = await fetch(
+      "https://api.cloudinary.com/v1_1/diqguycjt/image/upload",
+      {
+        method: "POST",
+        body: formData,
+      }
+    ).then((r) => r.json());
+    setImageSrc(data.secure_url);
+    setUploadData(data);
+  };
+
+  const handleOnChange = (e) => {
+    const reader = new FileReader();
+    reader.onload = function (onLoadEvent) {
+      setImageSrc(onLoadEvent.target.result);
+      setUploadData(undefined);
+    };
+    reader.readAsDataURL(e.target.files[0]);
   };
 
   return (
@@ -123,8 +159,12 @@ export default function Map({ latlng, setLatLng }) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         ></TileLayer>
         {opened ? (
-          <FormModal open={opened} close={() => setOpened(!opened)}>
-            <StyledForm onSubmit={handleSubmit}>
+          <FormModal
+            open={opened}
+            close={() => setOpened(!opened)}
+            onChange={handleOnChange}
+          >
+            <StyledForm onSubmit={submitForm} onChange={handleSubmit}>
               <StyledField>
                 <StyledLabel htmlFor="name">Fish Name: </StyledLabel>
                 <input
@@ -174,6 +214,8 @@ export default function Map({ latlng, setLatLng }) {
                   pattern="^(?!^ +$)([\w -&]+)$"
                   required
                 />
+                <StyledLabel htmlFor="name">Fish Image: </StyledLabel>
+                <input type="file" id="file" name="file" />
                 <DatePickerContainer>
                   <DatePicker
                     selected={startDate}
