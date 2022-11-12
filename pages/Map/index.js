@@ -2,16 +2,6 @@ import styled from "styled-components";
 import { search, mapImages } from "../../components/lib/cloudinary";
 import { useState, useEffect } from "react";
 
-export async function getServerSideProps() {
-  const results = await search();
-
-  const { resources, next_cursor: nextCursor } = results;
-  const images = mapImages(resources);
-  return {
-    props: { images, nextCursor },
-  };
-}
-
 export default function Map() {
   const [imageSrc, setImageSrc] = useState([]);
 
