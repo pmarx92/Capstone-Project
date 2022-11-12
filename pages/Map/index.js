@@ -24,7 +24,7 @@ export default function Map() {
     </div>
   );
 }
-/* export async function getStaticProps() {
+export async function getStaticProps() {
   const results = await search();
 
   const { resources, next_cursor: nextCursor } = results;
@@ -32,7 +32,7 @@ export default function Map() {
   return {
     props: { images, nextCursor },
   };
-} */
+}
 const StyledImage = styled.img`
   width: 15%;
   height: 15%;
