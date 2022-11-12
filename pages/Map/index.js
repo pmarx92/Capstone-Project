@@ -32,7 +32,7 @@ export default function Map({ images }) {
     <div>
       <h1>This is the Map Page - Under Construction</h1>
       {images.map((image) => {
-        return <StyledImage src={image.image} />;
+        return <StyledImage key={image.id} src={image.image} />;
       })}
     </div>
   );
