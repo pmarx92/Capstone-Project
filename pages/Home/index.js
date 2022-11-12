@@ -15,7 +15,7 @@ export async function getServerSideProps() {
 export default function Home({ images }) {
   return (
     <div>
-      <h1>This is the Map Page - Under Construction</h1>
+      <h1>This is the Home Page - Under Construction</h1>
       {images.map((data) => {
         console.log("images map: ", data);
         return <StyledImage key={data.asset_id} src={data.image} />;
