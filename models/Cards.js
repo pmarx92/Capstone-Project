@@ -29,6 +29,9 @@ const CardsSchema = new mongoose.Schema({
   coords: {
     type: [Number],
   },
+  cloudinarySrc: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.models.Cards || mongoose.model("Cards", CardsSchema);
