@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import HomeSVG from "../../public/images/house-solid.svg";
-import Map from "../../public/images/mapIcon.svg";
-import List from "../../public/images/List.svg";
-import Add from "../../public/images/add.svg";
+import HomeSVG from "../../public/images/Home.svg";
+import Map from "../../public/images/Map.svg";
+import List from "../../public/images/Liste.svg";
+import Add from "../../public/images/Neu.svg";
 import Image from "next/image";
 
 function Navigation() {
@@ -16,28 +16,28 @@ function Navigation() {
         <StyledList>
           <Link aria-label="Browse to Home" href="/" passHref>
             <Anchor active={pathname === "/"}>
-              <Image src={HomeSVG} height="175" />
+              <Image src={HomeSVG} width="175" />
             </Anchor>
           </Link>
         </StyledList>
         <StyledList>
           <Link aria-label="Browse the map page" href="/Map" passHref>
             <Anchor active={pathname === "/Map"}>
-              <Image src={Map} height="175" />
+              <Image src={Map} width="175" />
             </Anchor>
           </Link>
         </StyledList>
         <StyledList>
           <Link aria-label="Browse the list page" href="/List" passHref>
             <Anchor active={pathname === "../List"}>
-              <Image src={List} height="175" />
+              <Image src={List} width="175" />
             </Anchor>
           </Link>
         </StyledList>
         <StyledList>
           <Link aria-label="Browse to the form page" href="/Add" passHref>
             <Anchor active={pathname === "../Add"}>
-              <Image src={Add} height="175" />
+              <Image src={Add} width="175" />
             </Anchor>
           </Link>
         </StyledList>
@@ -49,24 +49,34 @@ function Navigation() {
 const Container = styled.div`
   position: fixed;
   bottom: 0px;
+  width: 100%;
+  background-color: #fff;
 `;
 const UnorderedList = styled.ul`
   display: flex;
   list-style-type: none;
-  box-shadow: 0 0 10px gray;
+  box-shadow: 0 0 5px gray;
+  width: 100%;
 `;
 const StyledList = styled.li`
   display: flex;
   justify-content: center;
+  width: 100%;
 `;
 const Anchor = styled.a`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
+
   transition: 0.9s;
   padding: 1.4em;
-  background-color: ${({ active }) => (active ? "green" : "lightgreen")};
+  width: 100%;
+  background-color: ${({ active }) =>
+    active ? "var(--backgroundColor-green)" : "#fff"};
 
   &:hover {
-    background-color: #173540;
+    background-color: var(--backgroundColor-green);
     cursor: pointer;
   }
 `;
