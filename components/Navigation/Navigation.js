@@ -14,7 +14,7 @@ function Navigation() {
     <Container>
       <UnorderedList>
         <StyledList>
-          <Link aria-label="Browse to Home" href="/" passHref>
+          <Link aria-label="Browse to Home" href="/Home" passHref>
             <Anchor active={pathname === "/"}>
               <Image src={HomeSVG} height="175" />
             </Anchor>

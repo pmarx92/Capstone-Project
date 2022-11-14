@@ -28,11 +28,16 @@ export default function Card({ data }) {
         <p>Weight: {data.data.weight}kg</p>
         <p>Length: {data.data.length}cm</p>
         <p>Location: {data.data.location}</p>
+        <StyledImage src={data.data.cloudinarySrc} />
         <Delete onClick={deleteCard}>Delete</Delete>
       </Container>
     </div>
   );
 }
+const StyledImage = styled.img`
+  width: 100%;
+  padding: 1rem;
+`;
 
 const Container = styled.div`
   border: 1px solid red;

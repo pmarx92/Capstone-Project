@@ -5,9 +5,12 @@ export default function List({ dataFromAPI }) {
   return (
     <div>
       <h1>This is the List Page - Under Construction</h1>
+
       {dataFromAPI.map((data) => {
         return (
           <Card key={data._id}>
+            <StyledImage src={data.cloudinarySrc} />
+
             <h2>
               <a>Name: {data.name}</a>
             </h2>
@@ -30,6 +33,10 @@ export default function List({ dataFromAPI }) {
     </div>
   );
 }
+
+const StyledImage = styled.img`
+  width: 50%;
+`;
 
 const Card = styled.div`
   display: flex;
