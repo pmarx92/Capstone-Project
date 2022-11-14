@@ -12,7 +12,7 @@ function Header() {
 
 export default Header;
 
-const HeadContainer = styled.div`
+const HeadContainer = styled.header`
   display: flex;
   justify-content: center;
   padding: 30px;
