@@ -1,20 +1,19 @@
 import styled from "styled-components";
+import HeaderIcon from "../../public/images/Logo_und_Text.svg";
+import Image from "next/image";
 
 function Header() {
   return (
-    <Background>
-      <StyledHeadline>Capstone Project</StyledHeadline>
-    </Background>
+    <HeadContainer>
+      <Image src={HeaderIcon} height="175px" />
+    </HeadContainer>
   );
 }
 
-const Background = styled.div`
-  background-color: lightgreen;
-  padding: 2em;
-  box-shadow: 0 0 10px grey;
-`;
-const StyledHeadline = styled.h1`
-  text-align: center;
-`;
-
 export default Header;
+
+const HeadContainer = styled.header`
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+`;
