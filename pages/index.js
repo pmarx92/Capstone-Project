@@ -1,4 +1,3 @@
-import Head from "next/head";
 import styled from "styled-components";
 
 import { search, mapImages } from "../components/lib/cloudinary";
