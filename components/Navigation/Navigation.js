@@ -51,6 +51,7 @@ const Container = styled.div`
   bottom: 0px;
   width: 100%;
   background-color: #fff;
+  z-index: 5;
 `;
 const UnorderedList = styled.ul`
   display: flex;
