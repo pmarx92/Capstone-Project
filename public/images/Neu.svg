@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Ebene_2" data-name="Ebene 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #011f26;
+      }
+
+      .cls-2 {
+        clip-path: url(#clippath);
+      }
+
+      .cls-3 {
+        fill: none;
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-3" width="64" height="64"/>
+    </clipPath>
+  </defs>
+  <g id="Text">
+    <g class="cls-2">
+      <g id="Gruppe_7" data-name="Gruppe 7">
+        <path id="Pfad_15" data-name="Pfad 15" class="cls-1" d="M31.6,.81C14.37,.81,.41,14.77,.41,32s13.96,31.19,31.19,31.19,31.19-13.96,31.19-31.19c0-17.22-13.94-31.18-31.16-31.19,0,0-.02,0-.03,0m16.41,36.11h-11.49v11.49c-.04,2.72-2.27,4.89-4.99,4.85-2.67-.04-4.82-2.19-4.85-4.85v-11.49H15.18c-2.72,.04-4.96-2.13-4.99-4.85-.04-2.72,2.13-4.96,4.85-4.99,.05,0,.09,0,.14,0h11.49V15.58c-.04-2.72,2.13-4.96,4.85-4.99,2.72-.04,4.96,2.13,4.99,4.85,0,.05,0,.09,0,.14v11.49h11.49c2.72,.04,4.89,2.27,4.85,4.99-.04,2.67-2.19,4.82-4.85,4.85"/>
+      </g>
+    </g>
+  </g>
+</svg>

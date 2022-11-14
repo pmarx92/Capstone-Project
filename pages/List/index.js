@@ -1,7 +1,19 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
-export default function List({ dataFromAPI }) {
+export default function List() {
+  const [dataFromAPI, setDataFromAPI] = useState([]);
+  async function fetchAPI() {
+    const res = await fetch("/api/formdata");
+    const data = await res.json();
+    setDataFromAPI(data.data);
+  }
+
+  useEffect(() => {
+    fetchAPI();
+  }, [dataFromAPI]);
+
   return (
     <div>
       <h1>This is the List Page - Under Construction</h1>

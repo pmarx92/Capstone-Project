@@ -1,4 +1,3 @@
-import Head from "next/head";
 import styled from "styled-components";
 
 import { search, mapImages } from "../components/lib/cloudinary";
@@ -19,7 +18,6 @@ export default function Home({ images }) {
     <div>
       <h1>This is the Home Page - Under Construction</h1>
       {images.map((data) => {
-        console.log("images map: ", data);
         return <StyledImage key={data.asset_id} src={data.image} />;
       })}
     </div>
