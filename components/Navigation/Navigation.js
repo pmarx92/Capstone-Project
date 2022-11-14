@@ -29,14 +29,14 @@ function Navigation() {
         </StyledList>
         <StyledList>
           <Link aria-label="Browse the list page" href="/List" passHref>
-            <Anchor active={pathname === "../List"}>
+            <Anchor active={pathname === "/List"}>
               <Image src={List} width="175" />
             </Anchor>
           </Link>
         </StyledList>
         <StyledList>
           <Link aria-label="Browse to the form page" href="/Add" passHref>
-            <Anchor active={pathname === "../Add"}>
+            <Anchor active={pathname === "/Add"}>
               <Image src={Add} width="175" />
             </Anchor>
           </Link>
