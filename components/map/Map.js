@@ -242,6 +242,23 @@ export default function Map({ latlng, setLatLng }) {
     </>
   );
 }
+const EditBtn = styled.button`
+  font-size: large;
+  position: absolute;
+  border-radius: 25px;
+  border: 0;
+  width: 35%;
+  bottom: -15px;
+  right: 10px;
+  color: var(--white);
+  background-color: var(--backgroundColor-green);
+  padding: 0.6rem 1.5rem;
+
+  &:hover {
+    box-shadow: 0 0 10px var(--backgroundColor-dark);
+  }
+`;
+
 const DatePickerContainer = styled.div`
   margin-top: 1rem;
 `;

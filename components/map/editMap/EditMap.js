@@ -20,6 +20,7 @@ export default function Map({ latlng, setLatLng }) {
   const [editfishLength, setEditFishLength] = useState();
   const [editfishLocation, setEditFishLocation] = useState("");
   const [APIData, setAPIData] = useState([]);
+  const [prevData, setPrevData] = useState([]);
   const router = useRouter();
 
   async function fetchAPI() {
@@ -27,6 +28,10 @@ export default function Map({ latlng, setLatLng }) {
     const data = await res.json();
     const fetchedAPIData = data.data;
     setAPIData(fetchedAPIData);
+
+    fetchedAPIData.map((data) => {
+      setPrevData(data);
+    });
 
     setLatLng(
       fetchedAPIData.map((data) => {
@@ -46,12 +51,12 @@ export default function Map({ latlng, setLatLng }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: editfishName || APIData.name,
-        weight: editfishWeight || APIData.weight,
-        length: editfishLength || APIData.length,
-        location: editfishLocation || APIData.location,
+        name: editfishName || prevData.name,
+        weight: editfishWeight || prevData.weight,
+        length: editfishLength || prevData.length,
+        location: editfishLocation || prevData.location,
         date: startDate.toISOString(),
-        coords: latlng || APIData.coords,
+        coords: latlng || prevData.coords,
       }),
     });
   };
@@ -124,8 +129,8 @@ export default function Map({ latlng, setLatLng }) {
           <EditFormModal open={opened} close={() => setOpened(!opened)}>
             <StyledForm onSubmit={handleSubmit}>
               <StyledField>
-                <StyledLabel htmlFor="name">Fish Name: </StyledLabel>
-                <input
+                <StyledLabel htmlFor="name">Caught fish: </StyledLabel>
+                <StyledInput
                   type="text"
                   id="name"
                   name="name"
@@ -134,11 +139,11 @@ export default function Map({ latlng, setLatLng }) {
                   placeholder="z.B. Lachs"
                   onChange={(e) => setEditFishName(e.target.value)}
                   pattern="^(?!^ +$)([\w -&]+)$"
-                  defaultValue={APIData.name}
+                  defaultValue={prevData.name}
                   required
                 />
                 <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
-                <input
+                <StyledInput
                   type="number"
                   id="weight"
                   name="weight"
@@ -147,11 +152,11 @@ export default function Map({ latlng, setLatLng }) {
                   max="25"
                   placeholder="z.B. 0.70"
                   onChange={(e) => setEditFishWeight(e.target.value)}
-                  defaultValue={APIData.weight}
+                  defaultValue={prevData.weight}
                   required
                 />
                 <StyledLabel htmlFor="length">Length in cm: </StyledLabel>
-                <input
+                <StyledInput
                   type="number"
                   id="length"
                   name="length"
@@ -160,11 +165,11 @@ export default function Map({ latlng, setLatLng }) {
                   min="10"
                   max="200"
                   onChange={(e) => setEditFishLength(e.target.value)}
-                  defaultValue={APIData.length}
+                  defaultValue={prevData.length}
                   required
                 />
                 <StyledLabel htmlFor="location">Location: </StyledLabel>
-                <input
+                <StyledInput
                   type="text"
                   id="location"
                   name="location"
@@ -173,11 +178,11 @@ export default function Map({ latlng, setLatLng }) {
                   placeholder="z.B. Kristiansand"
                   onChange={(e) => setEditFishLocation(e.target.value)}
                   pattern="^(?!^ +$)([\w -&]+)$"
-                  defaultValue={APIData.location}
+                  defaultValue={prevData.location}
                   required
                 />
                 <DatePickerContainer>
-                  <DatePicker
+                  <Test
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
                     showTimeSelect
@@ -189,7 +194,9 @@ export default function Map({ latlng, setLatLng }) {
                   />
                 </DatePickerContainer>
               </StyledField>
-              <StyledButton type="submit">Update</StyledButton>
+              <ButtonContainer>
+                <StyledButton type="submit">Update</StyledButton>
+              </ButtonContainer>
             </StyledForm>
           </EditFormModal>
         ) : null}
@@ -202,22 +209,52 @@ export default function Map({ latlng, setLatLng }) {
 const DatePickerContainer = styled.div`
   margin-top: 1rem;
 `;
+const Test = styled(DatePicker)`
+  border: 0;
+  border-radius: 20px;
+  padding: 0.7rem;
+  box-shadow: 3px 5px var(--backgroundColor-green);
+  background-color: var(--white);
+
+  &:hover {
+    box-shadow: 3px 5px var(--backgroundColor-dark);
+  }
+`;
+
+const StyledInput = styled.input`
+  border: 0;
+  border-radius: 20px;
+  padding: 0.7rem;
+  box-shadow: 3px 5px var(--backgroundColor-green);
+  background-color: var(--white);
+
+  &:hover {
+    box-shadow: 3px 5px var(--backgroundColor-dark);
+  }
+`;
 const StyledLabel = styled.label`
+  font-size: 20px;
   margin: 0.7rem 0;
 `;
-const StyledForm = styled.form`
-  width: 80%;
-  margin: 5rem auto;
-  padding: 1rem;
-`;
+const StyledForm = styled.form``;
+
 const StyledField = styled.fieldset`
+  gap: 3px;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0.5rem;
+  border: 0;
 `;
 const StyledButton = styled.button`
+  font-size: large;
+  border-radius: 25px;
+  border: 0;
+  color: var(--white);
+  background-color: var(--backgroundColor-dark);
+  padding: 0.6rem 1.5rem;
+`;
+const ButtonContainer = styled.div`
   display: flex;
-  margin: 1rem auto;
-  margin-bottom: 7rem;
-  padding: 0.3rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
 `;

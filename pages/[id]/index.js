@@ -23,33 +23,52 @@ export default function Card({ data }) {
 
   return (
     <div>
+      <StyledImage src={data.data.cloudinarySrc} />
       <Container>
-        <p>Name: {data.data.name}</p>
-        <p>Weight: {data.data.weight}kg</p>
-        <p>Length: {data.data.length}cm</p>
-        <p>Location: {data.data.location}</p>
-        <StyledImage src={data.data.cloudinarySrc} />
+        <StyledPara>Name: {data.data.name}</StyledPara>
+        <StyledPara>Weight: {data.data.weight}kg</StyledPara>
+        <StyledPara>Length: {data.data.length}cm</StyledPara>
+        <StyledPara>Location: {data.data.location}</StyledPara>
         <Delete onClick={deleteCard}>Delete</Delete>
       </Container>
     </div>
   );
 }
 const StyledImage = styled.img`
-  width: 100%;
-  padding: 1rem;
+  width: 75%;
+  border-radius: 25px;
+  margin: 0 0 3rem 1rem;
+  box-shadow: 0 0 10px var(--backgroundColor-dark);
 `;
 
 const Container = styled.div`
-  border: 1px solid red;
-  width: 50%;
-  padding: 1rem;
-  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 10px;
+  width: 70%;
+  margin: 0 auto;
+  padding: 2.5rem;
+  border-radius: 25px;
+  box-shadow: 0 0 10px var(--backgroundColor-dark);
 `;
-const Edit = styled.button`
-  padding: 0.5rem;
-  margin: 0.5rem;
-`;
+
 const Delete = styled.button`
-  padding: 0.5rem;
-  margin: 0.5rem;
+  font-size: large;
+  position: absolute;
+  border-radius: 25px;
+  border: 0;
+  width: 35%;
+  bottom: -15px;
+  right: 10px;
+  color: var(--white);
+  background-color: var(--backgroundColor-green);
+  padding: 0.6rem 1.5rem;
+
+  &:hover {
+    box-shadow: 0 0 10px var(--backgroundColor-dark);
+  }
+`;
+const StyledPara = styled.p`
+  font-size: 21px;
 `;

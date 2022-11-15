@@ -53,7 +53,7 @@ const ImageSlider = styled.div`
 `;
 const LeftArrow = styled(MdArrowBackIosNew)`
   position: absolute;
-  top: 50%;
+  bottom: -5rem;
   left: 32px;
   font-size: 3rem;
   color: var(--backgroundColor-green);
@@ -81,7 +81,7 @@ const LeftArrow = styled(MdArrowBackIosNew)`
 `;
 const RightArrow = styled(MdArrowForwardIos)`
   position: absolute;
-  top: 50%;
+  bottom: -5rem;
   right: 32px;
   font-size: 3rem;
   color: var(--backgroundColor-green);
@@ -107,9 +107,8 @@ const RightArrow = styled(MdArrowForwardIos)`
   }
 `;
 const StyledImage = styled.img`
-  width: 100vw;
-  padding: 1rem;
-  border-radius: 50px;
+  border-radius: 40px;
+  box-shadow: 0 0 10px var(--backgroundColor-dark);
 
   @media (min-width: 468px) {
     width: 90vw;
