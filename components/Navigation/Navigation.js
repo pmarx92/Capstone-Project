@@ -47,6 +47,7 @@ function Navigation() {
 }
 
 const Container = styled.div`
+  border-top: 5px solid var(--backgroundColor-green);
   position: fixed;
   bottom: 0px;
   width: 100%;
