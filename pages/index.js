@@ -70,13 +70,12 @@ const LeftArrow = styled(MdArrowBackIosNew)`
     left: 125px;
   }
   @media (min-width: 1100px) {
-    left: 300px;
+    bottom: 10rem;
+    left: 100px;
   }
   @media (min-width: 1450px) {
     left: 350px;
-  }
-  @media (min-width: 1700px) {
-    left: 400px;
+    bottom: 15rem;
   }
 `;
 const RightArrow = styled(MdArrowForwardIos)`
@@ -97,13 +96,12 @@ const RightArrow = styled(MdArrowForwardIos)`
     right: 125px;
   }
   @media (min-width: 1100px) {
-    right: 300px;
-  }
-  @media (min-width: 1450px) {
-    right: 350px;
+    right: 100px;
+    bottom: 10rem;
   }
   @media (min-width: 1700px) {
     right: 400px;
+    bottom: 15rem;
   }
 `;
 const StyledImage = styled.img`
