@@ -6,20 +6,19 @@ const GlobalStyle = createGlobalStyle`
           --text-on-color: #FFFFFF;
           --backgroundColor-green: #4B7322;
           --backgroundColor-dark: #011F26;
-
+          --white: #fff;
       }
   
       * {
-          box-sizing: border-box;
-          padding: 0;
-          margin: 0;
-      }
-  
-      body {
-          font-family: 'Noto Sans', sans-serif;
-          background-color: var(--background-primary);
+      font-family: 'Inter';
+         box-sizing: border-box;
+         padding: 0;
+         margin: 0;
+        }
+        
+        body {
           color: var(--text-primary);
-          margin-bottom: 5rem;
+          margin-bottom: 7rem;
       }
   `;
 

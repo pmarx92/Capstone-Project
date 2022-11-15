@@ -6,7 +6,10 @@ export default function formModal({ close, children }) {
       <StyledBackground />
       <StyledPopup>
         {children}
-        <button onClick={close}>Close</button>
+
+        <ButtonContainer>
+          <StyledBackButton onClick={close}>Go Back</StyledBackButton>
+        </ButtonContainer>
       </StyledPopup>
     </>
   );
@@ -14,11 +17,12 @@ export default function formModal({ close, children }) {
 
 const StyledPopup = styled.div`
   position: fixed;
-  top: 50%;
+  top: 46%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 50px;
+  background-color: #f8f8f8;
+  padding: 1.3rem;
+  border-radius: 20px;
   z-index: 1000;
   box-shadow: 0 0 10px black;
 `;
@@ -28,6 +32,20 @@ const StyledBackground = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.3);
   z-index: 1000;
+`;
+const StyledBackButton = styled.button`
+  font-size: large;
+  border-radius: 25px;
+  border: 0;
+  color: var(--white);
+  background-color: var(--backgroundColor-green);
+
+  padding: 0.6rem 1.5rem;
+`;
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  margin-top: -2.5rem;
 `;
