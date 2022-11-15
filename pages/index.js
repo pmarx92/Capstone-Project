@@ -15,7 +15,6 @@ export async function getServerSideProps() {
 
 export default function Home({ images }) {
   const [current, setCurrent] = useState(0);
-  const [index, setIndex] = useState(0);
 
   if (!Array.isArray(images) || images.length <= 0) {
     return null;
@@ -54,6 +53,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid red;
 `;
 const ImageSlider = styled.div`
   display: flex;
@@ -67,7 +67,7 @@ const ImageSlider = styled.div`
 `;
 const LeftArrow = styled(MdArrowBackIosNew)`
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 32px;
   font-size: 3rem;
   color: var(--backgroundColor-green);
@@ -95,7 +95,7 @@ const LeftArrow = styled(MdArrowBackIosNew)`
 `;
 const RightArrow = styled(MdArrowForwardIos)`
   position: absolute;
-  top: 50%;
+  top: 45%;
   right: 32px;
   font-size: 3rem;
   color: var(--backgroundColor-green);
