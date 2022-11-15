@@ -27,7 +27,6 @@ export default function Home({ images }) {
   const nextImage = () => {
     setCurrent(current === images.length - 1 ? 0 : current + 1);
   };
-  console.log(current);
 
   return (
     <Container>
@@ -49,13 +48,13 @@ export default function Home({ images }) {
 }
 
 const Container = styled.div`
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 const ImageSlider = styled.div`
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   width: 90%;
