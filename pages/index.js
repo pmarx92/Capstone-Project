@@ -15,6 +15,7 @@ export async function getServerSideProps() {
 
 export default function Home({ images }) {
   const [current, setCurrent] = useState(0);
+  const [index, setIndex] = useState(0);
 
   if (!Array.isArray(images) || images.length <= 0) {
     return null;
@@ -27,29 +28,42 @@ export default function Home({ images }) {
   const nextImage = () => {
     setCurrent(current === images.length - 1 ? 0 : current + 1);
   };
+  console.log(current);
 
   return (
-    <ImageSlider>
-      <LeftArrow onClick={prevImage} />
-      <RightArrow onClick={nextImage} />
-      {images.map((data, index) => {
-        return (
-          <>
-            {index === current && (
-              <StyledImage key={data.id} src={data.image} alt={data.title} />
-            )}
-          </>
-        );
-      })}
-    </ImageSlider>
+    <Container>
+      <ImageSlider>
+        <LeftArrow onClick={prevImage} />
+        <RightArrow onClick={nextImage} />
+        {images.map((data, index) => {
+          return (
+            <>
+              {index === current && (
+                <StyledImage key={data.id} src={data.image} alt={data.title} />
+              )}
+            </>
+          );
+        })}
+      </ImageSlider>
+    </Container>
   );
 }
 
-const ImageSlider = styled.div`
+const Container = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+const ImageSlider = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 700px;
+  margin-bottom: 5rem;
+
+  overflow: hidden;
 `;
 const LeftArrow = styled(MdArrowBackIosNew)`
   position: absolute;
@@ -107,20 +121,20 @@ const RightArrow = styled(MdArrowForwardIos)`
   }
 `;
 const StyledImage = styled.img`
-  width: 100vw;
-  padding: 1rem;
-  border-radius: 50px;
+  border-radius: 30px;
+  width: 96%;
+  box-shadow: 0 0 10px var(--backgroundColor-dark);
 
   @media (min-width: 468px) {
-    width: 90vw;
+    width: 95%;
   }
   @media (min-width: 950px) {
-    width: 80vw;
+    width: 90%;
   }
   @media (min-width: 1100px) {
     width: 60vw;
   }
   @media (min-width: 1450px) {
-    width: 44%;
+    width: 45%;
   }
 `;
