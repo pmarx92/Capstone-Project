@@ -27,7 +27,6 @@ export default function Home({ images }) {
   const nextImage = () => {
     setCurrent(current === images.length - 1 ? 0 : current + 1);
   };
-  console.log(current);
 
   return (
     <ImageSlider>
@@ -62,6 +61,7 @@ const LeftArrow = styled(MdArrowBackIosNew)`
   z-index: 5;
   cursor: pointer;
   user-select: none;
+
   @media (min-width: 468px) {
     left: 60px;
   }
