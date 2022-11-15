@@ -150,6 +150,7 @@ export default function Map({ latlng, setLatLng }) {
           borderRadius: "40px",
           boxShadow: "0 0 10px black",
           margin: "2rem auto",
+          zIndex: "1",
         }}
       >
         <ClickHandler />

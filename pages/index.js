@@ -1,10 +1,10 @@
 import styled from "styled-components";
-
+import { useState } from "react";
 import { search, mapImages } from "../components/lib/cloudinary";
+import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 
 export async function getServerSideProps() {
   const results = await search();
-
   const { resources } = results;
   const images = mapImages(resources);
 
@@ -14,18 +14,125 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ images }) {
+  const [current, setCurrent] = useState(0);
+
+  if (!Array.isArray(images) || images.length <= 0) {
+    return null;
+  }
+
+  const prevImage = () => {
+    setCurrent(current === 0 ? images.length - 1 : current - 1);
+  };
+
+  const nextImage = () => {
+    setCurrent(current === images.length - 1 ? 0 : current + 1);
+  };
+
   return (
-    <div>
-      <h1>This is the Home Page - Under Construction</h1>
-      {images.map((data) => {
-        return <StyledImage key={data.asset_id} src={data.image} />;
-      })}
-    </div>
+    <Container>
+      <ImageSlider>
+        <LeftArrow onClick={prevImage} />
+        <RightArrow onClick={nextImage} />
+        {images.map((data, index) => {
+          return (
+            <>
+              {index === current && (
+                <StyledImage key={data.id} src={data.image} alt={data.title} />
+              )}
+            </>
+          );
+        })}
+      </ImageSlider>
+    </Container>
   );
 }
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const ImageSlider = styled.div`
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 700px;
+  margin-bottom: 5rem;
+
+  overflow: hidden;
+`;
+const LeftArrow = styled(MdArrowBackIosNew)`
+  position: absolute;
+  top: 45%;
+  left: 32px;
+  font-size: 3rem;
+  color: var(--backgroundColor-green);
+
+  z-index: 5;
+  cursor: pointer;
+  user-select: none;
+
+  @media (min-width: 468px) {
+    left: 60px;
+  }
+
+  @media (min-width: 950px) {
+    left: 125px;
+  }
+  @media (min-width: 1100px) {
+    left: 300px;
+  }
+  @media (min-width: 1450px) {
+    left: 350px;
+  }
+  @media (min-width: 1700px) {
+    left: 400px;
+  }
+`;
+const RightArrow = styled(MdArrowForwardIos)`
+  position: absolute;
+  top: 45%;
+  right: 32px;
+  font-size: 3rem;
+  color: var(--backgroundColor-green);
+
+  z-index: 5;
+  cursor: pointer;
+  user-select: none;
+
+  @media (min-width: 468px) {
+    right: 60px;
+  }
+  @media (min-width: 950px) {
+    right: 125px;
+  }
+  @media (min-width: 1100px) {
+    right: 300px;
+  }
+  @media (min-width: 1450px) {
+    right: 350px;
+  }
+  @media (min-width: 1700px) {
+    right: 400px;
+  }
+`;
 const StyledImage = styled.img`
-  width: 15%;
-  height: 15%;
-  padding: 1rem;
+  border-radius: 30px;
+  width: 96%;
+  box-shadow: 0 0 10px var(--backgroundColor-dark);
+
+  @media (min-width: 468px) {
+    width: 95%;
+  }
+  @media (min-width: 950px) {
+    width: 90%;
+  }
+  @media (min-width: 1100px) {
+    width: 60vw;
+  }
+  @media (min-width: 1450px) {
+    width: 45%;
+  }
 `;
