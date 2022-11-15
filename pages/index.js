@@ -29,45 +29,31 @@ export default function Home({ images }) {
   };
 
   return (
-    <Container>
-      <ImageSlider>
-        <LeftArrow onClick={prevImage} />
-        <RightArrow onClick={nextImage} />
-        {images.map((data, index) => {
-          return (
-            <>
-              {index === current && (
-                <StyledImage key={data.id} src={data.image} alt={data.title} />
-              )}
-            </>
-          );
-        })}
-      </ImageSlider>
-    </Container>
+    <ImageSlider>
+      <LeftArrow onClick={prevImage} />
+      <RightArrow onClick={nextImage} />
+      {images.map((data, index) => {
+        return (
+          <>
+            {index === current && (
+              <StyledImage key={data.id} src={data.image} alt={data.title} />
+            )}
+          </>
+        );
+      })}
+    </ImageSlider>
   );
 }
 
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const ImageSlider = styled.div`
-  display: flex;
   position: relative;
+  display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
-  height: 700px;
-  margin-bottom: 5rem;
-
-  overflow: hidden;
 `;
 const LeftArrow = styled(MdArrowBackIosNew)`
   position: absolute;
-
   bottom: -5rem;
-
   left: 32px;
   font-size: 3rem;
   color: var(--backgroundColor-green);
@@ -95,9 +81,7 @@ const LeftArrow = styled(MdArrowBackIosNew)`
 `;
 const RightArrow = styled(MdArrowForwardIos)`
   position: absolute;
-
   bottom: -5rem;
-
   right: 32px;
   font-size: 3rem;
   color: var(--backgroundColor-green);
@@ -123,22 +107,19 @@ const RightArrow = styled(MdArrowForwardIos)`
   }
 `;
 const StyledImage = styled.img`
-
-  border-radius: 30px;
-  width: 96%;
-
+  border-radius: 40px;
   box-shadow: 0 0 10px var(--backgroundColor-dark);
 
   @media (min-width: 468px) {
-    width: 95%;
+    width: 90vw;
   }
   @media (min-width: 950px) {
-    width: 90%;
+    width: 80vw;
   }
   @media (min-width: 1100px) {
     width: 60vw;
   }
   @media (min-width: 1450px) {
-    width: 45%;
+    width: 44%;
   }
 `;
