@@ -15,7 +15,6 @@ export async function getServerSideProps() {
 
 export default function Home({ images }) {
   const [current, setCurrent] = useState(0);
-  const [index, setIndex] = useState(0);
 
   if (!Array.isArray(images) || images.length <= 0) {
     return null;
