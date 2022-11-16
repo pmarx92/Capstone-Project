@@ -167,8 +167,8 @@ export default function Map({ latlng, setLatLng }) {
           >
             <StyledForm onSubmit={submitForm} onChange={handleSubmit}>
               <StyledField>
-                <StyledLabel htmlFor="name">Fish Name: </StyledLabel>
-                <input
+                <StyledLabel htmlFor="name">Caught fish: </StyledLabel>
+                <StyledInput
                   type="text"
                   id="name"
                   name="name"
@@ -180,7 +180,7 @@ export default function Map({ latlng, setLatLng }) {
                   required
                 />
                 <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
-                <input
+                <StyledInput
                   type="number"
                   id="weight"
                   name="weight"
@@ -192,7 +192,7 @@ export default function Map({ latlng, setLatLng }) {
                   required
                 />
                 <StyledLabel htmlFor="length">Length in cm: </StyledLabel>
-                <input
+                <StyledInput
                   type="number"
                   id="length"
                   name="length"
@@ -204,7 +204,7 @@ export default function Map({ latlng, setLatLng }) {
                   required
                 />
                 <StyledLabel htmlFor="location">Location: </StyledLabel>
-                <input
+                <StyledInput
                   type="text"
                   id="location"
                   name="location"
@@ -215,10 +215,10 @@ export default function Map({ latlng, setLatLng }) {
                   pattern="^(?!^ +$)([\w -&]+)$"
                   required
                 />
-                <StyledLabel htmlFor="name">Fish Image: </StyledLabel>
-                <input type="file" id="file" name="file" />
+                <StyledLabel htmlFor="name">Upload Image: </StyledLabel>
+                <StyledInput type="file" id="file" name="file" />
                 <DatePickerContainer>
-                  <DatePicker
+                  <Test
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
                     showTimeSelect
@@ -230,7 +230,9 @@ export default function Map({ latlng, setLatLng }) {
                 </DatePickerContainer>
               </StyledField>
 
-              <StyledButton type="submit">Submit</StyledButton>
+              <ButtonContainer>
+                <StyledButton type="submit">Save</StyledButton>
+              </ButtonContainer>
             </StyledForm>
           </FormModal>
         ) : null}
@@ -240,25 +242,72 @@ export default function Map({ latlng, setLatLng }) {
     </>
   );
 }
+const EditBtn = styled.button`
+  font-size: large;
+  position: absolute;
+  border-radius: 25px;
+  border: 0;
+  width: 35%;
+  bottom: -15px;
+  right: 10px;
+  color: var(--white);
+  background-color: var(--backgroundColor-green);
+  padding: 0.6rem 1.5rem;
+
+  &:hover {
+    box-shadow: 0 0 10px var(--backgroundColor-dark);
+  }
+`;
+
 const DatePickerContainer = styled.div`
   margin-top: 1rem;
 `;
+const Test = styled(DatePicker)`
+  border: 0;
+  border-radius: 20px;
+  padding: 0.7rem;
+  box-shadow: 3px 5px var(--backgroundColor-green);
+  background-color: var(--white);
+  width: 75%;
+
+  &:hover {
+    box-shadow: 3px 5px var(--backgroundColor-dark);
+  }
+`;
+const StyledInput = styled.input`
+  border: 0;
+  border-radius: 20px;
+  padding: 0.7rem;
+  box-shadow: 3px 5px var(--backgroundColor-green);
+  background-color: var(--white);
+
+  &:hover {
+    box-shadow: 3px 5px var(--backgroundColor-dark);
+  }
+`;
 const StyledLabel = styled.label`
+  font-size: 20px;
   margin: 0.7rem 0;
 `;
-const StyledForm = styled.form`
-  width: 80%;
-  margin: 5rem auto;
-  padding: 1rem;
-`;
+const StyledForm = styled.form``;
+
 const StyledField = styled.fieldset`
+  gap: 3px;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0.5rem;
+  border: 0;
 `;
 const StyledButton = styled.button`
+  font-size: large;
+  border-radius: 25px;
+  border: 0;
+  color: var(--white);
+  background-color: var(--backgroundColor-dark);
+  padding: 0.6rem 1.5rem;
+`;
+const ButtonContainer = styled.div`
   display: flex;
-  margin: 1rem auto;
-  margin-bottom: 7rem;
-  padding: 0.3rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
 `;
