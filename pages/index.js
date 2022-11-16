@@ -99,12 +99,13 @@ const RightArrow = styled(MdArrowForwardIos)`
     right: 100px;
     bottom: 10rem;
   }
-  @media (min-width: 1700px) {
-    right: 400px;
+  @media (min-width: 1450px) {
+    right: 350px;
     bottom: 15rem;
   }
 `;
 const StyledImage = styled.img`
+  width: 90vw;
   border-radius: 40px;
   box-shadow: 0 0 10px var(--backgroundColor-dark);
 

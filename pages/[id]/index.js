@@ -13,7 +13,6 @@ export async function getServerSideProps(ctx) {
 
 export default function Card({ data }) {
   const router = useRouter();
-
   const deleteCard = async () => {
     const deleted = await fetch(`/api/formdata/${router.query.id}`, {
       method: "Delete",
@@ -36,6 +35,7 @@ export default function Card({ data }) {
 }
 const StyledImage = styled.img`
   width: 75%;
+  max-width: 800px;
   border-radius: 25px;
   margin: 0 0 3rem 1rem;
   box-shadow: 0 0 10px var(--backgroundColor-dark);
@@ -47,6 +47,7 @@ const Container = styled.div`
   position: relative;
   gap: 10px;
   width: 70%;
+  max-width: 550px;
   margin: 0 auto;
   padding: 2.5rem;
   border-radius: 25px;
@@ -59,6 +60,7 @@ const Delete = styled.button`
   border-radius: 25px;
   border: 0;
   width: 35%;
+  max-width: 130px;
   bottom: -15px;
   right: 10px;
   color: var(--white);

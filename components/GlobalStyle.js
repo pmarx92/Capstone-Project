@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
       }
   
       * {
-      font-family: 'Inter';
+         font-family: 'Inter', sans-serif;
          box-sizing: border-box;
          padding: 0;
          margin: 0;
