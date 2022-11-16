@@ -50,10 +50,11 @@ const ImageSlider = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 6rem;
 `;
 const LeftArrow = styled(MdArrowBackIosNew)`
   position: absolute;
-  bottom: -5rem;
+  top: -5rem;
   left: 32px;
   font-size: 3rem;
   color: var(--backgroundColor-green);
@@ -80,7 +81,7 @@ const LeftArrow = styled(MdArrowBackIosNew)`
 `;
 const RightArrow = styled(MdArrowForwardIos)`
   position: absolute;
-  bottom: -5rem;
+  top: -5rem;
   right: 32px;
   font-size: 3rem;
   color: var(--backgroundColor-green);
