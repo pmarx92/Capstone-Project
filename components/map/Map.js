@@ -1,20 +1,24 @@
 import { MapContainer, TileLayer } from "react-leaflet";
 import { useMapEvents } from "react-leaflet/hooks";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import "leaflet/dist/leaflet.css";
 import FormModal from "../formModal";
 import styled from "styled-components";
-
-import { useRouter } from "next/router";
+import BeatLoader from "react-spinners/BeatLoader";
+import Modal from "../modal/index";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Link from "next/link";
 
 export default function Map({ latlng, setLatLng }) {
   const [position, setPosition] = useState([
     58.034125450605316, 7.454502477686363,
   ]);
-  const [opened, setOpened] = useState(false);
   const { pathname } = useRouter();
+
+  const [opened, setOpened] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
 
   const [fishName, setFishName] = useState("");
@@ -27,6 +31,8 @@ export default function Map({ latlng, setLatLng }) {
 
   const [imageSrc, setImageSrc] = useState();
   const [uploadData, setUploadData] = useState();
+
+  const [loading, setLoading] = useState(false);
 
   async function fetchAPI() {
     const res = await fetch("/api/formdata");
@@ -44,6 +50,7 @@ export default function Map({ latlng, setLatLng }) {
   }, []);
 
   const sendToServer = async () => {
+    setLoading(true);
     const res = await fetch("/api/formdata", {
       method: "POST",
       headers: {
@@ -59,6 +66,10 @@ export default function Map({ latlng, setLatLng }) {
         cloudinarySrc: imageSrc,
       }),
     });
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+    setConfirmed(true);
   };
 
   function ClickHandler() {
@@ -90,8 +101,7 @@ export default function Map({ latlng, setLatLng }) {
           .addTo(map)
           .bindPopup(
             `Name: ${element.name} <br> Weight: ${element.weight}kg <br> Length: ${element.length}cm`
-          )
-          .openPopup();
+          );
       });
     }, []);
   }
@@ -140,122 +150,176 @@ export default function Map({ latlng, setLatLng }) {
 
   return (
     <>
-      <MapContainer
-        center={position}
-        zoom={11}
-        scrollWheelZoom={true}
-        style={{
-          width: "70%",
-          height: "36rem",
-          borderRadius: "40px",
-          boxShadow: "0 0 10px black",
-          margin: "2rem auto",
-          zIndex: "1",
-        }}
-      >
-        <ClickHandler />
+      {confirmed ? (
+        <Modal>
+          <ModalContainer>
+            <ModalPara>Your fish has successfully added.</ModalPara>
+            <ButtonContainer>
+              <ModalButtonDark onClick={() => setConfirmed(false)}>
+                Back
+              </ModalButtonDark>
+              <ModalButtonGreen>
+                <Link aria-label="Browse to Home" href="/List" passHref>
+                  <Anchor active={pathname === "/List"}>List Page</Anchor>
+                </Link>
+              </ModalButtonGreen>
+            </ButtonContainer>
+          </ModalContainer>
+        </Modal>
+      ) : null}
+      {loading ? (
+        <Container>
+          <BeatLoader color="green" />
+        </Container>
+      ) : (
+        <MapContainer
+          center={position}
+          zoom={11}
+          scrollWheelZoom={true}
+          style={{
+            width: "70%",
+            height: "36rem",
+            borderRadius: "40px",
+            boxShadow: "0 0 10px black",
+            margin: "2rem auto",
+            zIndex: "1",
+          }}
+        >
+          <ClickHandler />
 
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        ></TileLayer>
-        {opened ? (
-          <FormModal
-            open={opened}
-            close={() => setOpened(!opened)}
-            onChange={handleOnChange}
-          >
-            <StyledForm onSubmit={submitForm} onChange={handleSubmit}>
-              <StyledField>
-                <StyledLabel htmlFor="name">Caught fish: </StyledLabel>
-                <StyledInput
-                  type="text"
-                  id="name"
-                  name="name"
-                  minLength="3"
-                  maxLength="15"
-                  placeholder="z.B. Lachs"
-                  onChange={(e) => setFishName(e.target.value)}
-                  pattern="^(?!^ +$)([\w -&]+)$"
-                  required
-                />
-                <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
-                <StyledInput
-                  type="number"
-                  id="weight"
-                  name="weight"
-                  step="0.10"
-                  min=".50"
-                  max="25"
-                  placeholder="z.B. 0.70"
-                  onChange={(e) => setFishWeight(e.target.value)}
-                  required
-                />
-                <StyledLabel htmlFor="length">Length in cm: </StyledLabel>
-                <StyledInput
-                  type="number"
-                  id="length"
-                  name="length"
-                  placeholder="z.B. 10"
-                  step="10"
-                  min="10"
-                  max="200"
-                  onChange={(e) => setFishLength(e.target.value)}
-                  required
-                />
-                <StyledLabel htmlFor="location">Location: </StyledLabel>
-                <StyledInput
-                  type="text"
-                  id="location"
-                  name="location"
-                  minLength="3"
-                  maxLength="15"
-                  placeholder="z.B. Kristiansand"
-                  onChange={(e) => setFishLocation(e.target.value)}
-                  pattern="^(?!^ +$)([\w -&]+)$"
-                  required
-                />
-                <StyledLabel htmlFor="name">Upload Image: </StyledLabel>
-                <StyledInput type="file" id="file" name="file" />
-                <DatePickerContainer>
-                  <Test
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={15}
-                    timeCaption="time"
-                    dateFormat="h:mm aa d MMMM, yyyy "
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          ></TileLayer>
+          {opened ? (
+            <FormModal
+              open={opened}
+              close={() => setOpened(!opened)}
+              onChange={handleOnChange}
+            >
+              <StyledForm onSubmit={submitForm} onChange={handleSubmit}>
+                <StyledField>
+                  <StyledLabel htmlFor="name">Caught fish: </StyledLabel>
+                  <StyledInput
+                    type="text"
+                    id="name"
+                    name="name"
+                    minLength="3"
+                    maxLength="15"
+                    placeholder="z.B. Lachs"
+                    onChange={(e) => setFishName(e.target.value)}
+                    pattern="^(?!^ +$)([\w -&]+)$"
+                    required
                   />
-                </DatePickerContainer>
-              </StyledField>
+                  <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
+                  <StyledInput
+                    type="number"
+                    id="weight"
+                    name="weight"
+                    step="0.10"
+                    min=".50"
+                    max="25"
+                    placeholder="z.B. 0.70"
+                    onChange={(e) => setFishWeight(e.target.value)}
+                    required
+                  />
+                  <StyledLabel htmlFor="length">Length in cm: </StyledLabel>
+                  <StyledInput
+                    type="number"
+                    id="length"
+                    name="length"
+                    placeholder="z.B. 10"
+                    step="10"
+                    min="10"
+                    max="200"
+                    onChange={(e) => setFishLength(e.target.value)}
+                    required
+                  />
+                  <StyledLabel htmlFor="location">Location: </StyledLabel>
+                  <StyledInput
+                    type="text"
+                    id="location"
+                    name="location"
+                    minLength="3"
+                    maxLength="15"
+                    placeholder="z.B. Kristiansand"
+                    onChange={(e) => setFishLocation(e.target.value)}
+                    pattern="^(?!^ +$)([\w -&]+)$"
+                    required
+                  />
+                  <StyledLabel htmlFor="name">Upload Image: </StyledLabel>
+                  <StyledInput type="file" id="file" name="file" />
+                  <DatePickerContainer>
+                    <Test
+                      selected={startDate}
+                      onChange={(date) => setStartDate(date)}
+                      showTimeSelect
+                      timeFormat="HH:mm"
+                      timeIntervals={15}
+                      timeCaption="time"
+                      dateFormat="h:mm aa d MMMM, yyyy "
+                    />
+                  </DatePickerContainer>
+                </StyledField>
 
-              <ButtonContainer>
-                <StyledButton type="submit">Save</StyledButton>
-              </ButtonContainer>
-            </StyledForm>
-          </FormModal>
-        ) : null}
+                <ButtonContainer>
+                  <StyledButton type="submit">Save</StyledButton>
+                </ButtonContainer>
+              </StyledForm>
+            </FormModal>
+          ) : null}
 
-        <CreateMarker />
-      </MapContainer>
+          <CreateMarker />
+        </MapContainer>
+      )}
     </>
   );
 }
-const EditBtn = styled.button`
+const Container = styled.div`
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+`;
+const ModalContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+const ModalPara = styled.p``;
+
+const ModalButtonGreen = styled.button`
   font-size: large;
-  position: absolute;
   border-radius: 25px;
+  margin-top: 1rem;
   border: 0;
-  width: 35%;
-  bottom: -15px;
-  right: 10px;
+  width: 150px;
   color: var(--white);
   background-color: var(--backgroundColor-green);
+  padding: 0.6rem 2rem;
+
+  &:hover {
+    box-shadow: 3px 5px var(--backgroundColor-dark);
+  }
+`;
+const ModalButtonDark = styled.button`
+  font-size: large;
+  border-radius: 25px;
+  margin-top: 1rem;
+  width: 150px;
+  border: 0;
+  color: var(--white);
+  background-color: var(--backgroundColor-dark);
   padding: 0.6rem 1.5rem;
 
   &:hover {
-    box-shadow: 0 0 10px var(--backgroundColor-dark);
+    box-shadow: 3px 5px var(--backgroundColor-green);
   }
 `;
 
@@ -286,13 +350,12 @@ const StyledInput = styled.input`
   }
 `;
 const StyledLabel = styled.label`
-  font-size: 20px;
+  font-size: 18px;
   margin: 0.7rem 0;
 `;
 const StyledForm = styled.form``;
 
 const StyledField = styled.fieldset`
-  gap: 3px;
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
@@ -309,5 +372,14 @@ const StyledButton = styled.button`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 2rem;
+  margin-top: 0rem;
+  gap: 5px;
+`;
+const Anchor = styled.a`
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

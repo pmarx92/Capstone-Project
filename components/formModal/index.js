@@ -21,7 +21,7 @@ const StyledPopup = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #f8f8f8;
-  padding: 1.3rem;
+  padding: 0.7rem;
   border-radius: 20px;
   z-index: 1000;
   box-shadow: 0 0 10px black;

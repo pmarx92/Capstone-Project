@@ -65,7 +65,7 @@ const Delete = styled.button`
   right: 10px;
   color: var(--white);
   background-color: var(--backgroundColor-green);
-  padding: 0.6rem 1.5rem;
+  padding: 0.6rem 1.3rem;
 
   &:hover {
     box-shadow: 0 0 10px var(--backgroundColor-dark);

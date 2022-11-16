@@ -43,13 +43,14 @@ export default function List() {
 
 const StyledPara = styled.p`
   font-size: 21px;
+  width: 200px;
 `;
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 15px;
-  margin-left: 4rem;
+  margin-left: 3rem;
 
   @media (min-width: 568px) {
     margin-left: 6rem;
@@ -67,7 +68,7 @@ const ButtonContainer = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 7px;
 `;
 const Card = styled.div`
   display: flex;
