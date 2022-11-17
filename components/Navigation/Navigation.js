@@ -20,13 +20,7 @@ function Navigation() {
             </Anchor>
           </Link>
         </StyledList>
-        <StyledList>
-          <Link aria-label="Browse the map page" href="/Map" passHref>
-            <Anchor active={pathname === "/Map"}>
-              <Image src={Map} width="175" />
-            </Anchor>
-          </Link>
-        </StyledList>
+
         <StyledList>
           <Link aria-label="Browse the list page" href="/List" passHref>
             <Anchor active={pathname === "/List"}>

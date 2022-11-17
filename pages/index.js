@@ -106,9 +106,9 @@ const RightArrow = styled(MdArrowForwardIos)`
   }
 `;
 const StyledImage = styled.img`
-  width: 90vw;
-  border-radius: 40px;
-  box-shadow: 0 0 10px var(--backgroundColor-dark);
+  width: 95vw;
+  border-radius: 15px;
+  box-shadow: 0 0 7px var(--backgroundColor-dark);
 
   @media (min-width: 468px) {
     width: 90vw;

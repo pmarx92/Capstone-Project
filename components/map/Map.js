@@ -87,20 +87,17 @@ export default function Map({ latlng, setLatLng }) {
     !opened
       ? map.on("click", function (e) {
           setLatLng([e.latlng.lat, e.latlng.lng]);
-          map.off("click");
+
           setOpened(!opened);
-          map.dragging.disable();
-          map.touchZoom.disable();
-          map.doubleClickZoom.disable();
+
           map.scrollWheelZoom.disable();
-          map.boxZoom.disable();
-          map.keyboard.disable();
         })
       : null;
     return null;
   }
 
-  const submitForm = () => {
+  const submitForm = (event) => {
+    event.preventDefault();
     setOpened(!opened);
     setFishName("");
     setFishWeight("");
@@ -166,19 +163,7 @@ export default function Map({ latlng, setLatLng }) {
           <BeatLoader color="green" />
         </Container>
       ) : (
-        <MapContainer
-          center={position}
-          zoom={11}
-          scrollWheelZoom={true}
-          style={{
-            width: "70%",
-            height: "36rem",
-            borderRadius: "40px",
-            boxShadow: "0 0 10px black",
-            margin: "2rem auto",
-            zIndex: "1",
-          }}
-        >
+        <StyledMapContainer center={position} zoom={11} scrollWheelZoom={true}>
           <ClickHandler />
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -190,7 +175,20 @@ export default function Map({ latlng, setLatLng }) {
               close={() => setOpened(!opened)}
               onChange={handleOnChange}
             >
-              <StyledForm onSubmit={submitForm}>
+              <StyledForm
+                onSubmit={submitForm}
+                onClick={(event) => event.stopPropagation()}
+              >
+                <DatePickerContainer>
+                  <Test
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    timeFormat="HH:mm"
+                    dateFormat="h:mm aa d MMMM, yyyy "
+                    timeInputLabel="Time:"
+                    showTimeInput
+                  />
+                </DatePickerContainer>
                 <StyledField>
                   <StyledLabel htmlFor="name">Caught fish: </StyledLabel>
                   <StyledInput
@@ -244,17 +242,6 @@ export default function Map({ latlng, setLatLng }) {
                   <StyledForm onChange={handleSubmit}>
                     <StyledInput type="file" id="file" name="file" />
                   </StyledForm>
-                  <DatePickerContainer>
-                    <Test
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                      showTimeSelect
-                      timeFormat="HH:mm"
-                      timeIntervals={15}
-                      timeCaption="time"
-                      dateFormat="h:mm aa d MMMM, yyyy "
-                    />
-                  </DatePickerContainer>
                 </StyledField>
 
                 <ButtonContainer>
@@ -270,21 +257,29 @@ export default function Map({ latlng, setLatLng }) {
                 position={(element.coords, element.coords)}
                 icon={locationOnIcon}
               >
-                <Popup>
-                  <p>Name: {element.name}</p>
-                  <p>Weight: {element.weight}kg</p>
-                  <p>Length: {element.length}cm</p>
-                  <p>Location: {element.location}</p>
-                  <p>Date: {element.date}</p>
-                </Popup>
+                <PopupContainer>
+                  <StyledPara>Caught fish: {element.name}</StyledPara>
+                  <StyledPara>Weight: {element.weight}kg</StyledPara>
+                  <StyledPara>Length: {element.length}cm</StyledPara>
+                  <StyledPara>Location: {element.location}</StyledPara>
+                  <StyledPara>Date: {element.date}</StyledPara>
+                </PopupContainer>
               </Marker>
             );
           })}
-        </MapContainer>
+        </StyledMapContainer>
       )}
     </>
   );
 }
+const PopupContainer = styled(Popup)``;
+const StyledPara = styled.p`
+  font-size: 15px;
+  box-shadow: 0 0 5px var(--backgroundColor-dark);
+  border-radius: 10px;
+  padding: 0.8rem;
+  color: var(--text-primary);
+`;
 const Container = styled.div`
   height: 100vh;
   width: 100vw;
@@ -295,6 +290,14 @@ const Container = styled.div`
   top: 0;
   left: 0;
   z-index: 10;
+`;
+const StyledMapContainer = styled(MapContainer)`
+  height: 80vh;
+  width: 90vw;
+  border-radius: 10px;
+  margin: 0 auto;
+  z-index: 1;
+  box-shadow: 0 0 3px var(--backgroundColor-dark);
 `;
 const ModalContainer = styled.div`
   display: flex;
@@ -337,9 +340,10 @@ const DatePickerContainer = styled.div`
   margin-top: 1rem;
 `;
 const Test = styled(DatePicker)`
+  display: block;
   border: 0;
   border-radius: 20px;
-  padding: 0.7rem;
+  padding: 0.5rem;
   box-shadow: 3px 5px var(--backgroundColor-green);
   background-color: var(--white);
   width: 75%;
@@ -382,7 +386,6 @@ const StyledButton = styled.button`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 0rem;
   gap: 5px;
 `;
 const Anchor = styled.a`

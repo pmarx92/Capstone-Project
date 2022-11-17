@@ -9,16 +9,17 @@ const GlobalStyle = createGlobalStyle`
           --white: #fff;
       }
   
-      * {
-         font-family: 'Inter', sans-serif;
+    *,
+      *::before,
+      *::after {
+        font-family: 'Inter', sans-serif;
          box-sizing: border-box;
          padding: 0;
          margin: 0;
-        }
-        
+      }
         body {
           color: var(--text-primary);
-          margin-bottom: 20rem;
+          margin-bottom: 10rem;
       }
   `;
 
