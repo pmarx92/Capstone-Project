@@ -19,12 +19,12 @@ function MyApp({ Component, pageProps }) {
         setLoading(false);
       }, 500);
 
-    router.events.on("startOnRouteChange", handleStart);
+    router.events.on("routeChangeStart", handleStart);
     router.events.on("routeChangeComplete", handleComplete);
     router.events.on("routeChangeError", handleComplete);
 
     return () => {
-      router.events.off("startOnRouteChange", handleStart);
+      router.events.off("routeChangeStart", handleStart);
       router.events.off("routeChangeComplete", handleComplete);
       router.events.off("routeChangeError", handleComplete);
     };
