@@ -1,4 +1,5 @@
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+
 import { useMapEvents } from "react-leaflet/hooks";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -49,6 +50,14 @@ export default function Map({ latlng, setLatLng }) {
     fetchAPI();
   }, []);
 
+  const locationOnIcon = L.divIcon({
+    html: `<svg width="38px" height="38px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="var(--backgroundColor-green)"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`,
+    className: "",
+    iconSize: [48, 48],
+    iconAnchor: [24, 48],
+    popupAnchor: [0, -48],
+  });
+
   const sendToServer = async () => {
     setLoading(true);
     const res = await fetch("/api/formdata", {
@@ -78,7 +87,6 @@ export default function Map({ latlng, setLatLng }) {
     !opened
       ? map.on("click", function (e) {
           setLatLng([e.latlng.lat, e.latlng.lng]);
-          L.circle([e.latlng.lat, e.latlng.lng], { radius: 200 }).addTo(map);
           map.off("click");
           setOpened(!opened);
           map.dragging.disable();
@@ -90,20 +98,6 @@ export default function Map({ latlng, setLatLng }) {
         })
       : null;
     return null;
-  }
-
-  function CreateMarker() {
-    const map = useMapEvents({});
-
-    useEffect(() => {
-      APIData.forEach((element) => {
-        L.circle([element.coords[0], element.coords[1]], { radius: 200 })
-          .addTo(map)
-          .bindPopup(
-            `Name: ${element.name} <br> Weight: ${element.weight}kg <br> Length: ${element.length}cm`
-          );
-      });
-    }, []);
   }
 
   const submitForm = () => {
@@ -186,18 +180,17 @@ export default function Map({ latlng, setLatLng }) {
           }}
         >
           <ClickHandler />
-
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          ></TileLayer>
+          />
           {opened ? (
             <FormModal
               open={opened}
               close={() => setOpened(!opened)}
               onChange={handleOnChange}
             >
-              <StyledForm onSubmit={submitForm} onChange={handleSubmit}>
+              <StyledForm onSubmit={submitForm}>
                 <StyledField>
                   <StyledLabel htmlFor="name">Caught fish: </StyledLabel>
                   <StyledInput
@@ -248,7 +241,9 @@ export default function Map({ latlng, setLatLng }) {
                     required
                   />
                   <StyledLabel htmlFor="name">Upload Image: </StyledLabel>
-                  <StyledInput type="file" id="file" name="file" />
+                  <StyledForm onChange={handleSubmit}>
+                    <StyledInput type="file" id="file" name="file" />
+                  </StyledForm>
                   <DatePickerContainer>
                     <Test
                       selected={startDate}
@@ -269,7 +264,22 @@ export default function Map({ latlng, setLatLng }) {
             </FormModal>
           ) : null}
 
-          <CreateMarker />
+          {APIData.map((element) => {
+            return (
+              <Marker
+                position={(element.coords, element.coords)}
+                icon={locationOnIcon}
+              >
+                <Popup>
+                  <p>Name: {element.name}</p>
+                  <p>Weight: {element.weight}kg</p>
+                  <p>Length: {element.length}cm</p>
+                  <p>Location: {element.location}</p>
+                  <p>Date: {element.date}</p>
+                </Popup>
+              </Marker>
+            );
+          })}
         </MapContainer>
       )}
     </>
