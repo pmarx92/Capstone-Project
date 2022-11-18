@@ -19,8 +19,12 @@ export default function Map({ latlng, setLatLng }) {
   const [editfishWeight, setEditFishWeight] = useState();
   const [editfishLength, setEditFishLength] = useState();
   const [editfishLocation, setEditFishLocation] = useState("");
+
+  const [prevfishName, setPrevFishName] = useState("");
+  const [prevfishWeight, setPrevFishWeight] = useState();
+  const [prevfishLength, setPrevFishLength] = useState();
+  const [previshLocation, setPrevFishLocation] = useState("");
   const [APIData, setAPIData] = useState([]);
-  const [prevData, setPrevData] = useState([]);
   const router = useRouter();
 
   async function fetchAPI() {
@@ -30,7 +34,11 @@ export default function Map({ latlng, setLatLng }) {
     setAPIData(fetchedAPIData);
 
     fetchedAPIData.map((data) => {
-      setPrevData(data);
+      setPrevFishName(data.name);
+      setPrevFishWeight(data.weight);
+      setPrevFishLength(data.length);
+      setPrevFishLocation(data.location);
+      console.log(data);
     });
 
     setLatLng(
@@ -51,10 +59,10 @@ export default function Map({ latlng, setLatLng }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: editfishName || prevData.name,
-        weight: editfishWeight || prevData.weight,
-        length: editfishLength || prevData.length,
-        location: editfishLocation || prevData.location,
+        name: editfishName || prevfishName,
+        weight: editfishWeight || prevfishWeight,
+        length: editfishLength || prevfishLength,
+        location: editfishLocation || previshLocation,
         date: startDate.toISOString(),
         coords: latlng,
       }),
@@ -118,7 +126,7 @@ export default function Map({ latlng, setLatLng }) {
                   placeholder="z.B. Lachs"
                   onChange={(e) => setEditFishName(e.target.value)}
                   pattern="^(?!^ +$)([\w -&]+)$"
-                  defaultValue={prevData.name}
+                  defaultValue={prevfishName}
                   required
                 />
                 <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -131,7 +139,7 @@ export default function Map({ latlng, setLatLng }) {
                   max="25"
                   placeholder="z.B. 0.70"
                   onChange={(e) => setEditFishWeight(e.target.value)}
-                  defaultValue={prevData.weight}
+                  defaultValue={prevfishWeight}
                   required
                 />
                 <StyledLabel htmlFor="length">Length in cm: </StyledLabel>
@@ -144,7 +152,7 @@ export default function Map({ latlng, setLatLng }) {
                   min="10"
                   max="200"
                   onChange={(e) => setEditFishLength(e.target.value)}
-                  defaultValue={prevData.length}
+                  defaultValue={prevfishLength}
                   required
                 />
                 <StyledLabel htmlFor="location">Location: </StyledLabel>
@@ -157,7 +165,7 @@ export default function Map({ latlng, setLatLng }) {
                   placeholder="z.B. Kristiansand"
                   onChange={(e) => setEditFishLocation(e.target.value)}
                   pattern="^(?!^ +$)([\w -&]+)$"
-                  defaultValue={prevData.location}
+                  defaultValue={previshLocation}
                   required
                 />
                 <DatePickerContainer>
