@@ -161,7 +161,7 @@ export default function Map({ latlng, setLatLng }) {
                   required
                 />
                 <DatePickerContainer>
-                  <Test
+                  <DateSelector
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
                     showTimeSelect
@@ -212,7 +212,7 @@ const StyledPara = styled.p`
 const DatePickerContainer = styled.div`
   margin-top: 1rem;
 `;
-const Test = styled(DatePicker)`
+const DateSelector = styled(DatePicker)`
   border: 0;
   border-radius: 20px;
   padding: 0.7rem;

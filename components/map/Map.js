@@ -82,12 +82,13 @@ export default function Map({ latlng, setLatLng }) {
   };
 
   function ClickHandler() {
-    const map = useMapEvents({});
+    const map = useMapEvents({ tap: false });
 
     !opened
       ? map.on("click", function (e) {
           setLatLng([e.latlng.lat, e.latlng.lng]);
           setOpened(!opened);
+          map.off();
           map.dragging.disable();
           map.touchZoom.disable();
           map.doubleClickZoom.disable();
@@ -100,8 +101,8 @@ export default function Map({ latlng, setLatLng }) {
     return null;
   }
 
-  const submitForm = (event) => {
-    event.preventDefault();
+  const submitForm = (e) => {
+    L.DomEvent.stopPropagation(e);
     setOpened(!opened);
     setFishName("");
     setFishWeight("");
@@ -179,12 +180,9 @@ export default function Map({ latlng, setLatLng }) {
               close={() => setOpened(!opened)}
               onChange={handleOnChange}
             >
-              <StyledForm
-                onSubmit={submitForm}
-                onClick={(event) => event.stopPropagation()}
-              >
+              <StyledForm onSubmit={submitForm}>
                 <DatePickerContainer>
-                  <Test
+                  <DateSelector
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
                     timeFormat="HH:mm"
@@ -249,7 +247,12 @@ export default function Map({ latlng, setLatLng }) {
                 </StyledField>
 
                 <ButtonContainer>
-                  <StyledButton type="submit">Save</StyledButton>
+                  <StyledButton
+                    type="submit"
+                    onClick={(e) => L.DomEvent.stopPropagation(e)}
+                  >
+                    Save
+                  </StyledButton>
                 </ButtonContainer>
               </StyledForm>
             </FormModal>
@@ -344,7 +347,7 @@ const ModalButtonDark = styled.button`
 const DatePickerContainer = styled.div`
   margin-top: 1rem;
 `;
-const Test = styled(DatePicker)`
+const DateSelector = styled(DatePicker)`
   display: block;
   border: 0;
   border-radius: 20px;
