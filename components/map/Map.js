@@ -87,9 +87,13 @@ export default function Map({ latlng, setLatLng }) {
     !opened
       ? map.on("click", function (e) {
           setLatLng([e.latlng.lat, e.latlng.lng]);
-
           setOpened(!opened);
-
+          map.dragging.disable();
+          map.touchZoom.disable();
+          map.doubleClickZoom.disable();
+          map.scrollWheelZoom.disable();
+          map.boxZoom.disable();
+          map.keyboard.disable();
           map.scrollWheelZoom.disable();
         })
       : null;
