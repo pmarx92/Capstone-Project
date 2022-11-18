@@ -34,11 +34,11 @@ export default function Card({ data }) {
   );
 }
 const StyledImage = styled.img`
-  width: 75%;
+  width: 85%;
   max-width: 800px;
-  border-radius: 25px;
-  margin: 0 0 3rem 1rem;
-  box-shadow: 0 0 10px var(--backgroundColor-dark);
+  border-radius: 15px;
+  margin: 0 0 4rem 1rem;
+  box-shadow: 0 0 7px var(--backgroundColor-dark);
 `;
 
 const Container = styled.div`

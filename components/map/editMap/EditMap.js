@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useMapEvents } from "react-leaflet/hooks";
 import { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
@@ -56,7 +56,7 @@ export default function Map({ latlng, setLatLng }) {
         length: editfishLength || prevData.length,
         location: editfishLocation || prevData.location,
         date: startDate.toISOString(),
-        coords: latlng || prevData.coords,
+        coords: latlng,
       }),
     });
   };
@@ -67,7 +67,6 @@ export default function Map({ latlng, setLatLng }) {
     !opened
       ? map.on("click", function (e) {
           setLatLng([e.latlng.lat, e.latlng.lng]);
-          L.circle([e.latlng.lat, e.latlng.lng], { radius: 200 }).addTo(map);
           map.off("click");
           setOpened(!opened);
           map.dragging.disable();
@@ -80,21 +79,13 @@ export default function Map({ latlng, setLatLng }) {
       : null;
     return null;
   }
-
-  function CreateMarker() {
-    const map = useMapEvents({});
-    useEffect(() => {
-      APIData.forEach((element) => {
-        L.circle([element.coords[0], element.coords[1]], { radius: 200 })
-          .addTo(map)
-          .bindPopup(
-            `Name: ${element.name} <br> Weight: ${element.weight}kg <br> Length: ${element.length}cm`
-          )
-          .openPopup();
-      });
-    }, []);
-  }
-
+  const locationOnIcon = L.divIcon({
+    html: `<svg width="38px" height="38px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="var(--backgroundColor-green)"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`,
+    className: "",
+    iconSize: [48, 48],
+    iconAnchor: [24, 48],
+    popupAnchor: [0, -48],
+  });
   const handleSubmit = () => {
     setOpened(!opened);
     setEditFishName("");
@@ -106,19 +97,7 @@ export default function Map({ latlng, setLatLng }) {
 
   return (
     <>
-      <MapContainer
-        center={position}
-        zoom={11}
-        scrollWheelZoom={true}
-        style={{
-          width: "70%",
-          height: "36rem",
-          borderRadius: "40px",
-          boxShadow: "0 0 10px black",
-          margin: "2rem auto",
-          zIndex: "1",
-        }}
-      >
+      <StyledMapContainer center={position} zoom={11} scrollWheelZoom={true}>
         <ClickHandler />
 
         <TileLayer
@@ -201,11 +180,35 @@ export default function Map({ latlng, setLatLng }) {
           </EditFormModal>
         ) : null}
 
-        <CreateMarker />
-      </MapContainer>
+        {APIData.map((element) => {
+          return (
+            <Marker
+              key={element._id}
+              position={(element.coords, element.coords)}
+              icon={locationOnIcon}
+            >
+              <PopupContainer>
+                <StyledPara>Name: {element.name}</StyledPara>
+                <StyledPara>Weight: {element.weight}kg</StyledPara>
+                <StyledPara>Length: {element.length}cm</StyledPara>
+                <StyledPara>Location: {element.location}</StyledPara>
+                <StyledPara>Date: {element.date}</StyledPara>
+              </PopupContainer>
+            </Marker>
+          );
+        })}
+      </StyledMapContainer>
     </>
   );
 }
+const PopupContainer = styled(Popup)``;
+const StyledPara = styled.p`
+  font-size: 15px;
+  box-shadow: 0 0 5px var(--backgroundColor-dark);
+  border-radius: 10px;
+  padding: 0.8rem;
+  color: var(--text-primary);
+`;
 const DatePickerContainer = styled.div`
   margin-top: 1rem;
 `;
@@ -220,7 +223,14 @@ const Test = styled(DatePicker)`
     box-shadow: 3px 5px var(--backgroundColor-dark);
   }
 `;
-
+const StyledMapContainer = styled(MapContainer)`
+  height: 80vh;
+  width: 90vw;
+  border-radius: 10px;
+  margin: 0 auto;
+  z-index: 1;
+  box-shadow: 0 0 3px var(--backgroundColor-dark);
+`;
 const StyledInput = styled.input`
   border: 0;
   border-radius: 20px;

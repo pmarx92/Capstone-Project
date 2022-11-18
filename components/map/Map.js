@@ -1,4 +1,5 @@
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+
 import { useMapEvents } from "react-leaflet/hooks";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -49,6 +50,14 @@ export default function Map({ latlng, setLatLng }) {
     fetchAPI();
   }, []);
 
+  const locationOnIcon = L.divIcon({
+    html: `<svg width="38px" height="38px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="var(--backgroundColor-green)"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`,
+    className: "",
+    iconSize: [48, 48],
+    iconAnchor: [24, 48],
+    popupAnchor: [0, -48],
+  });
+
   const sendToServer = async () => {
     setLoading(true);
     const res = await fetch("/api/formdata", {
@@ -78,8 +87,6 @@ export default function Map({ latlng, setLatLng }) {
     !opened
       ? map.on("click", function (e) {
           setLatLng([e.latlng.lat, e.latlng.lng]);
-          L.circle([e.latlng.lat, e.latlng.lng], { radius: 200 }).addTo(map);
-          map.off("click");
           setOpened(!opened);
           map.dragging.disable();
           map.touchZoom.disable();
@@ -87,26 +94,14 @@ export default function Map({ latlng, setLatLng }) {
           map.scrollWheelZoom.disable();
           map.boxZoom.disable();
           map.keyboard.disable();
+          map.scrollWheelZoom.disable();
         })
       : null;
     return null;
   }
 
-  function CreateMarker() {
-    const map = useMapEvents({});
-
-    useEffect(() => {
-      APIData.forEach((element) => {
-        L.circle([element.coords[0], element.coords[1]], { radius: 200 })
-          .addTo(map)
-          .bindPopup(
-            `Name: ${element.name} <br> Weight: ${element.weight}kg <br> Length: ${element.length}cm`
-          );
-      });
-    }, []);
-  }
-
-  const submitForm = () => {
+  const submitForm = (event) => {
+    event.preventDefault();
     setOpened(!opened);
     setFishName("");
     setFishWeight("");
@@ -172,32 +167,32 @@ export default function Map({ latlng, setLatLng }) {
           <BeatLoader color="green" />
         </Container>
       ) : (
-        <MapContainer
-          center={position}
-          zoom={11}
-          scrollWheelZoom={true}
-          style={{
-            width: "70%",
-            height: "36rem",
-            borderRadius: "40px",
-            boxShadow: "0 0 10px black",
-            margin: "2rem auto",
-            zIndex: "1",
-          }}
-        >
+        <StyledMapContainer center={position} zoom={11} scrollWheelZoom={true}>
           <ClickHandler />
-
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          ></TileLayer>
+          />
           {opened ? (
             <FormModal
               open={opened}
               close={() => setOpened(!opened)}
               onChange={handleOnChange}
             >
-              <StyledForm onSubmit={submitForm} onChange={handleSubmit}>
+              <StyledForm
+                onSubmit={submitForm}
+                onClick={(event) => event.stopPropagation()}
+              >
+                <DatePickerContainer>
+                  <Test
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    timeFormat="HH:mm"
+                    dateFormat="h:mm aa d MMMM, yyyy "
+                    timeInputLabel="Time:"
+                    showTimeInput
+                  />
+                </DatePickerContainer>
                 <StyledField>
                   <StyledLabel htmlFor="name">Caught fish: </StyledLabel>
                   <StyledInput
@@ -248,18 +243,9 @@ export default function Map({ latlng, setLatLng }) {
                     required
                   />
                   <StyledLabel htmlFor="name">Upload Image: </StyledLabel>
-                  <StyledInput type="file" id="file" name="file" />
-                  <DatePickerContainer>
-                    <Test
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                      showTimeSelect
-                      timeFormat="HH:mm"
-                      timeIntervals={15}
-                      timeCaption="time"
-                      dateFormat="h:mm aa d MMMM, yyyy "
-                    />
-                  </DatePickerContainer>
+                  <StyledForm onChange={handleSubmit}>
+                    <StyledInput type="file" id="file" name="file" />
+                  </StyledForm>
                 </StyledField>
 
                 <ButtonContainer>
@@ -269,12 +255,36 @@ export default function Map({ latlng, setLatLng }) {
             </FormModal>
           ) : null}
 
-          <CreateMarker />
-        </MapContainer>
+          {APIData.map((element) => {
+            return (
+              <Marker
+                key={element._id}
+                position={(element.coords, element.coords)}
+                icon={locationOnIcon}
+              >
+                <PopupContainer>
+                  <StyledPara>Caught fish: {element.name}</StyledPara>
+                  <StyledPara>Weight: {element.weight}kg</StyledPara>
+                  <StyledPara>Length: {element.length}cm</StyledPara>
+                  <StyledPara>Location: {element.location}</StyledPara>
+                  <StyledPara>Date: {element.date}</StyledPara>
+                </PopupContainer>
+              </Marker>
+            );
+          })}
+        </StyledMapContainer>
       )}
     </>
   );
 }
+const PopupContainer = styled(Popup)``;
+const StyledPara = styled.p`
+  font-size: 15px;
+  box-shadow: 0 0 5px var(--backgroundColor-dark);
+  border-radius: 10px;
+  padding: 0.8rem;
+  color: var(--text-primary);
+`;
 const Container = styled.div`
   height: 100vh;
   width: 100vw;
@@ -285,6 +295,14 @@ const Container = styled.div`
   top: 0;
   left: 0;
   z-index: 10;
+`;
+const StyledMapContainer = styled(MapContainer)`
+  height: 80vh;
+  width: 90vw;
+  border-radius: 10px;
+  margin: 0 auto;
+  z-index: 1;
+  box-shadow: 0 0 3px var(--backgroundColor-dark);
 `;
 const ModalContainer = styled.div`
   display: flex;
@@ -327,9 +345,10 @@ const DatePickerContainer = styled.div`
   margin-top: 1rem;
 `;
 const Test = styled(DatePicker)`
+  display: block;
   border: 0;
   border-radius: 20px;
-  padding: 0.7rem;
+  padding: 0.5rem;
   box-shadow: 3px 5px var(--backgroundColor-green);
   background-color: var(--white);
   width: 75%;
@@ -372,7 +391,6 @@ const StyledButton = styled.button`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 0rem;
   gap: 5px;
 `;
 const Anchor = styled.a`

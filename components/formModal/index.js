@@ -17,7 +17,7 @@ export default function formModal({ close, children }) {
 
 const StyledPopup = styled.div`
   position: fixed;
-  top: 46%;
+  top: 44%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #f8f8f8;
@@ -41,7 +41,6 @@ const StyledBackButton = styled.button`
   border: 0;
   color: var(--white);
   background-color: var(--backgroundColor-green);
-
   padding: 0.6rem 1.5rem;
 `;
 const ButtonContainer = styled.div`

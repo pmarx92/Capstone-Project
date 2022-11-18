@@ -33,21 +33,20 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
-      <Layout>
-        {loading ? (
-          <Container>
-            <BeatLoader color="green" />
-          </Container>
-        ) : (
-          <Component
-            {...pageProps}
-            setLatLng={setLatLng}
-            latlng={latlng}
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-          />
-        )}
-      </Layout>
+      <Layout> </Layout>
+      {loading ? (
+        <Container>
+          <BeatLoader color="green" />
+        </Container>
+      ) : (
+        <Component
+          {...pageProps}
+          setLatLng={setLatLng}
+          latlng={latlng}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+        />
+      )}
     </>
   );
 }
@@ -64,55 +63,6 @@ const Container = styled.div`
   left: 0;
 
   z-index: 10;
-`;
-
-const Spinner = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  height: 100px;
-  width: 100px;
-  margin: 0 auto;
-  -webkit-animation: rotation 1.8s infinite linear;
-  -moz-animation: rotation 1.8s infinite linear;
-  -o-animation: rotation 1.8s infinite linear;
-  animation: rotation 1.8s infinite linear;
-  border: 6px solid var(--backgroundColor-green);
-
-  @-webkit-keyframes rotation {
-    from {
-      -webkit-transform: rotate(0deg);
-    }
-    to {
-      -webkit-transform: rotate(359deg);
-    }
-  }
-  @-moz-keyframes rotation {
-    from {
-      -moz-transform: rotate(0deg);
-    }
-    to {
-      -moz-transform: rotate(359deg);
-    }
-  }
-
-  @-o-keyframes rotation {
-    from {
-      -o-transform: rotate(0deg);
-    }
-    to {
-      -o-transform: rotate(359deg);
-    }
-  }
-
-  @keyframes rotation {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(359deg);
-    }
-  }
 `;
 
 export default MyApp;
