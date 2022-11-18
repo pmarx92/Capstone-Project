@@ -202,6 +202,7 @@ export default function Map({ latlng, setLatLng }) {
                     placeholder="z.B. Lachs"
                     onChange={(e) => setFishName(e.target.value)}
                     pattern="^(?!^ +$)([\w -&]+)$"
+                    autoComplete="off"
                     required
                   />
                   <StyledLabel htmlFor="weight">Weight in kg: </StyledLabel>
@@ -238,6 +239,7 @@ export default function Map({ latlng, setLatLng }) {
                     placeholder="z.B. Kristiansand"
                     onChange={(e) => setFishLocation(e.target.value)}
                     pattern="^(?!^ +$)([\w -&]+)$"
+                    autoComplete="off"
                     required
                   />
                   <StyledLabel htmlFor="name">Upload Image: </StyledLabel>
