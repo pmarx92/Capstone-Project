@@ -258,6 +258,7 @@ export default function Map({ latlng, setLatLng }) {
           {APIData.map((element) => {
             return (
               <Marker
+                key={element._id}
                 position={(element.coords, element.coords)}
                 icon={locationOnIcon}
               >
